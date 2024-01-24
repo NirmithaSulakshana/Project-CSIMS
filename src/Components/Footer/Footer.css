@@ -1,0 +1,62 @@
+.ft-main{
+    height: 103px;
+    width: 100%;
+    background-color: rgba(23, 62, 48, 1);
+    color: white;
+    text-align: center;
+    
+}
+
+.ft-details{
+    text-align: left;
+    color: #FFF;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 400;
+    padding-top: 10px;
+    height: 50px;
+    width: 33%;
+    float: left;
+}
+
+.ft-img{
+    margin-top: 14px;
+    margin-left: 18px;
+    margin-right: 18px;
+    width: 65px;
+    height: 60px;
+    flex-shrink: 0;
+    float: left;
+}
+
+.ft-media{
+    width: 33%;
+    height: 45px;
+    float: left;
+    align-items: center;
+    padding-top: 14px;
+}
+
+.ft-links{
+    width: 34%;
+    height: 30px;
+    float: left;
+    padding-top: 5px;
+}
+
+.links{
+    font-size: 15px;
+    padding-top: 20px;
+    
+}
+
+.ft-media-commn{
+    float: right;
+    padding-right: 20px;
+}
+
+a{
+    text-decoration: none;
+    color: #FFFFFF;
+}
+
