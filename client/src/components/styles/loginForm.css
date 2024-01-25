@@ -1,0 +1,25 @@
+.lg-main{
+    width: 60%;
+    height: 70%;
+    flex-shrink: 0;
+    display: flex;
+    border-radius: 60px;
+    opacity: 0.92;
+    background: #FFF;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 60px;
+    margin: 10px;
+}
+
+.lg-head{
+    
+    background-color: blue;
+    flex: 1;
+    margin: 8px;
+    padding: 16px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
