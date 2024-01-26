@@ -1,0 +1,14 @@
+/* Navbar.css */
+.navbar {
+    background-color: #fff; /* Set your desired background color */
+    padding: 10px;
+    transition: background-color 0.6s ease-in-out;
+  }
+  
+  .navbar.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow when sticky */
+  }
+  

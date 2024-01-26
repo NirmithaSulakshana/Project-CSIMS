@@ -1,0 +1,41 @@
+.ft-main{
+    height: 103px;
+    width: 100%;
+    background-color: rgba(23, 62, 48, 1);
+    color: white;
+    text-align: center;
+}
+
+.ft-details{
+    text-align: left;
+    color: #FFF;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 400;
+    padding-top: 10px;
+    height: 103px;
+    width: 33%;
+    float: left;
+}
+
+.ft-img{
+    width: 85px;
+    height: 80px;
+    flex-shrink: 0;
+    float: left;
+}
+
+.ft-media{
+    width: 33%;
+    height: 103px;
+    float: left;
+    align-items: center;
+    padding-top: 15px;
+}
+
+.ft-links{
+    width: 34%;
+    height: 103px;
+    float: left;
+    padding-top: 30px;
+}

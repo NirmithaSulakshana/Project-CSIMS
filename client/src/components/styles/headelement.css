@@ -1,0 +1,41 @@
+.head{
+    width: 100%;
+    height: 100px;
+    flex-shrink: 0;
+    min-height: 100px;
+    background: #173E30;
+}
+
+.companyTitle{
+    color: #FFF;
+    text-align: center;
+    font-family: Inter;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin-top: 10px;
+}
+
+.companyAddress{
+    color: #FFF;
+    text-align: center;
+    font-family: Inter;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.csLogo{
+    float: left;
+    width: 110px;
+    height: 100px;
+    flex-shrink: 0;
+}
+
+.title{
+    float:left;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
