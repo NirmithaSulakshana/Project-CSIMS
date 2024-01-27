@@ -2,12 +2,22 @@ import React from "react";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import "./styles/loginForm.css";
+import { Link } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
+import { useNavigate } from 'react-router-dom';
+
 
 function LogInForm({ onClose }) {
+  const Navigate = useNavigate();
   return (
-    <div className="lg-main">
-      <div className="lg-head">
+    <div className="lg-main"  style={{ backgroundImage: 'url(/images/beet.jpg)' }} >
+      
+      <div className="lg-head" >
         <h1>Log In</h1>
+       <div>
+       <img src="images/login1.jpg" alt="login" className="ft1-img" style={{ height: 250, width: 250 }} />
+      </div>
+
       </div>
       <div className="lg-head">
         <table className="lg-table">
@@ -32,11 +42,24 @@ function LogInForm({ onClose }) {
               </FloatingLabel>
             </td>
           </tr>
+          <tr>
+            <td>
+            <p>
+              Don't have any account<br/>
+              <Link to="/SignC">Create Account</Link>
+            </p>
+            </td>
+          </tr>
+        
+        <tr>
+        <td>
+        <Button variant="success" onClick={() => Navigate("/Order")}>Login</Button>
+            <Button  variant="primary"onClick={onClose}>Close</Button>
+        </td>
+        </tr>
         </table>
       </div>
-      <div className="lg-head">
-        <button onClick={onClose}>Close</button>
-      </div>
+     
     </div>
   );
 }

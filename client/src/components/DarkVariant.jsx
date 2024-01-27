@@ -28,12 +28,11 @@ function DarkVariant() {
           />
           <Carousel.Caption>
             <h2 className="c-lable">
-              Bringing Sri Lanka's Finest Vegetables
-              <br />
-              and Fruits to the World.
+              Welcome to CS FRESH
+             
             </h2>
             <Button onClick={() => openLoginForm()} variant="primary" size="lg">
-              Sign In
+              LOGIN
             </Button>{" "}
           </Carousel.Caption>
         </Carousel.Item>
@@ -44,7 +43,9 @@ function DarkVariant() {
             alt="Second slide"
           />
           <Carousel.Caption>
-            <h3 className="c-lable">Sri Lanka's largest exporters</h3>
+            <h3 className="c-lable"> Bringing Sri Lanka's Finest Vegetables
+              <br />
+              and Fruits to the World.</h3>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item className="c-item">
@@ -54,7 +55,7 @@ function DarkVariant() {
             alt="Third slide"
           />
           <Carousel.Caption>
-            <h3 className="c-lable">Third slide label</h3>
+            <h3 className="c-lable">Sri Lanka's largest exporters</h3>
             <p>
               Praesent commodo cursus magna, vel scelerisque nisl consectetur.
             </p>

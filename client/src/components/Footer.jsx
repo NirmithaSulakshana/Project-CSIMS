@@ -18,7 +18,7 @@ function Footer() {
         <span>0771234578</span>
         <br />
         <EmailIcon />
-        <span>example@gmail.com</span>
+        <span>kalumnet@gmail.com</span>
       </div>
       <div className="ft-links">
         <span>Home</span> <span>About Us</span>
