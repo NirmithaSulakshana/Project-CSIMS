@@ -2,6 +2,7 @@ const crypto = require("crypto");
 const express = require("express");
 const userRouter = express.Router();
 const { Op } = require("sequelize");
+const jwt = require("jsonwebtoken");
 
 //const bcrypt = require("bcrypt");
 //const salt = 10;
@@ -117,13 +118,24 @@ userRouter.post("/login", async (req, res) => {
     }
     // Hash the entered password using SHA-256
     const enteredHashedPassword = hashPassword(password);
-    console.log(user.password);
-    console.log(enteredHashedPassword);
+
     // Compare the hashed entered password with the stored hashed password in the database
     if (enteredHashedPassword !== user.password) {
       return res.status(401).json({ message: "Invalid password" });
     }
-    res.status(200).json({ message: "You logged in!" });
+    //res.status(200).json({ message: "You logged in!" });
+
+    // Generate JWT token
+    const accessToken = jwt.sign(
+      {
+        userId: user.id,
+        email: user.email,
+      },
+      "importantsecret",
+      { expiresIn: "1h" }
+    );
+    // Send the token to the client
+    res.status(200).json({ accessToken });
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ message: "Internal server error" });

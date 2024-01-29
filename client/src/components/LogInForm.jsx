@@ -22,9 +22,12 @@ function LogInForm({ onClose }) {
         password,
       })
       .then((response) => {
-        console.log(response);
+        //console.log(response);
         if (response.status === 200) {
           //alert("Succesfully loged in ");
+          const accessToken = response.data.accessToken;
+          sessionStorage.setItem("accessToken", accessToken);
+
           showSuccessToast("Succesfully loged in");
           setTimeout(() => {
             navigate("/Order");
@@ -35,19 +38,6 @@ function LogInForm({ onClose }) {
         console.error("Error login:", error);
         showErrorToast("Error While Logging");
       });
-    /*try {
-      const response = await axios.post(
-        "http://localhost:3001/api/users/login",
-        {
-          email,
-          password,
-        }
-      );
-      Navigate("/Order");
-    } catch (error) {
-      console.error("Error during login:", error);
-    }
-    */
   };
   return (
     <div
