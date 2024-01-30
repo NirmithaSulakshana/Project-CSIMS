@@ -27,12 +27,9 @@ function DarkVariant() {
             alt="First slide"
           />
           <Carousel.Caption>
-            <h2 className="c-lable">
-              Welcome to CS FRESH
-             
-            </h2>
+            <h2 className="c-lable">Welcome to CS FRESH</h2>
             <Button onClick={() => openLoginForm()} variant="primary" size="lg">
-              LOGIN
+              USER LOGIN
             </Button>{" "}
           </Carousel.Caption>
         </Carousel.Item>
@@ -43,9 +40,12 @@ function DarkVariant() {
             alt="Second slide"
           />
           <Carousel.Caption>
-            <h3 className="c-lable"> Bringing Sri Lanka's Finest Vegetables
+            <h3 className="c-lable">
+              {" "}
+              Bringing Sri Lanka's Finest Vegetables
               <br />
-              and Fruits to the World.</h3>
+              and Fruits to the World.
+            </h3>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item className="c-item">
