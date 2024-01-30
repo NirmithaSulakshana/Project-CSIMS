@@ -14,29 +14,48 @@
     font-style: normal;
     font-weight: 400;
     padding-top: 10px;
-    height: 103px;
+    height: 50px;
     width: 33%;
     float: left;
 }
 
 .ft-img{
-    width: 85px;
-    height: 80px;
+    margin-top: 14px;
+    margin-left: 18px;
+    margin-right: 18px;
+    width: 65px;
+    height: 60px;
     flex-shrink: 0;
     float: left;
 }
 
 .ft-media{
     width: 33%;
-    height: 103px;
+    height: 45px;
     float: left;
     align-items: center;
-    padding-top: 15px;
+    padding-top: 14px;
 }
 
 .ft-links{
     width: 34%;
-    height: 103px;
+    height: 30px;
     float: left;
-    padding-top: 30px;
+    padding-top: 5px;
+}
+
+.links{
+    font-size: 15px;
+    padding-top: 8px;
+    
+}
+
+.ft-media-commn{
+    float: right;
+    padding-right: 20px;
+}
+
+a{
+    text-decoration: none;
+    color: #FFFFFF;
 }
