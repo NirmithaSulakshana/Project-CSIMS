@@ -53,7 +53,7 @@ function AdminLogInForm({ onClose }) {
         
         <tr>
         <td>
-        <Button variant="success" onClick={() => Navigate("/Order")}>Login</Button>
+        <Button variant="success" onClick={() => Navigate("")}>Login</Button>
             <Button  variant="primary"onClick={onClose}>Close</Button>
         </td>
         </tr>

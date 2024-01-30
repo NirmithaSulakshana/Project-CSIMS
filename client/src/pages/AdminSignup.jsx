@@ -3,9 +3,7 @@ import '../components/styles/AdminSignup.css'
 import React, { useState } from 'react';
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import Footer from '../components/Footer';
-//import Header from '../components/Headelement';
 
-//import content_icon from '../../public/images/content.png'
 
 
 const AdminSignupC = () => {
@@ -119,20 +117,16 @@ const AdminSignupC = () => {
 
 
     return (
-        <div className = "container">
-            <div>
-
-                {/* <Header/> */}
-                
-            </div>               
+        <div className = "container1">
+             
             
             <div className = "contentc">
-                   {/* <img style = {{width: "100%", height: "100%"}}
+                    <img 
                 
                 src="images/shelf.jpg"
                 
-            />     */}
-                <div className = "shape"></div>
+            />     
+                <div className = "shape">
                 <div className = "signup" >Sign Up</div>
                 <div className="inputs">
                     
@@ -434,7 +428,11 @@ const AdminSignupC = () => {
             <div>
                  
             </div>
-            {/* <Footer /> */}
+            </div>
+            <div>
+             <Footer />  
+
+            </div>
         </div>
 
     )
