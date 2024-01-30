@@ -7,12 +7,12 @@ const jwt = require("jsonwebtoken");
 //const bcrypt = require("bcrypt");
 //const salt = 10;
 
-const hashPassword = (password) =>
-  crypto.createHash("sha256").update(password).digest("hex");
-
 const { Users } = require("../models");
 
 userRouter.use(express.json());
+
+const hashPassword = (password) =>
+  crypto.createHash("sha256").update(password).digest("hex");
 
 //get all users
 userRouter.get("/getUsers", (req, res) => {

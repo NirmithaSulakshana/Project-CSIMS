@@ -21,9 +21,9 @@ itemRouter.get("/getItems", (req, res) => {
 });
 
 //get single item
-itemRouter.get("/getItems/:id", (req, res) => {
-  const itemId = req.params.id;
-  Items.findOne({ where: { id: itemId } })
+itemRouter.get("/getItems/:itemName", (req, res) => {
+  const item = req.params.itemName;
+  Items.findOne({ where: { itemName: item } })
     .then((item) => {
       if (!item) {
         // If no item is found, send a 404 response
