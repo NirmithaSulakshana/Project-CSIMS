@@ -44,7 +44,11 @@ function NavBar() {
           >
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/AboutUs">About Us</Nav.Link>
-            <Nav.Link href="#">Link</Nav.Link>
+            {!localStorage.getItem("accessToken") && (
+              <>
+                <Nav.Link href="#">Log In</Nav.Link>
+              </>
+            )}
             <NavDropdown title="Link" id="navbarScrollingDropdown">
               <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action4">
