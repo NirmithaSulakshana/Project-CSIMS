@@ -26,7 +26,7 @@ function LogInForm({ onClose }) {
         if (response.status === 200) {
           //alert("Succesfully loged in ");
           const accessToken = response.data.accessToken;
-          sessionStorage.setItem("accessToken", accessToken);
+          localStorage.setItem("accessToken", accessToken);
 
           showSuccessToast("Succesfully loged in");
           setTimeout(() => {
@@ -102,9 +102,9 @@ function LogInForm({ onClose }) {
             <td>
               <Button variant="success" onClick={handleLogin}>
                 Login
-              </Button>
-              <Button variant="primary" onClick={onClose}>
-                Close
+              </Button>{" "}
+              <Button variant="success" onClick={onClose}>
+                Cancel
               </Button>
             </td>
           </tr>
