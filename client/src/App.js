@@ -11,6 +11,7 @@ import AdminSignup from "./pages/AdminSignup";
 
 import { AuthContext } from "./helpers/AuthContext";
 import { useEffect, useState } from "react";
+import AdminPanel from "./pages/AdminPage/adminPanel";
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
             <Route path="/SignC" element={<SignC />} />
             <Route path="/Order" element={<Order />} />
             <Route path="/AdminSignup" element={<AdminSignup />} />
+            <Route path="/AdminPage" element={<AdminPanel />} />
           </Routes>
         </BrowserRouter>
       </AuthContext.Provider>
