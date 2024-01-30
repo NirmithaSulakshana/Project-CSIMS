@@ -6,8 +6,13 @@ import AboutUs from "./pages/AboutUs";
 import NavBar from "./components/NavBar";
 import SignC from "./pages/SignC";
 import Order from "./pages/Order";
+
+import AdminSignup from "./pages/AdminSignup";
+
 import { AuthContext } from "./helpers/AuthContext";
 import { useEffect, useState } from "react";
+import AdminPanel from "./pages/AdminPage/adminPanel";
+
 
 function App() {
   const [authState, setauthState] = useState(false);
@@ -21,6 +26,8 @@ function App() {
   return (
     <div className="App">
       <Headelement />
+
+
       <AuthContext.Provider value={{ authState, setauthState }}>
         <NavBar />
         <BrowserRouter>
@@ -29,9 +36,12 @@ function App() {
             <Route path="/AboutUS" element={<AboutUs />} />
             <Route path="/SignC" element={<SignC />} />
             <Route path="/Order" element={<Order />} />
+            <Route path="/AdminSignup" element={<AdminSignup />} />
+            <Route path="/AdminPage" element={<AdminPanel />} />
           </Routes>
         </BrowserRouter>
       </AuthContext.Provider>
+
     </div>
   );
 }

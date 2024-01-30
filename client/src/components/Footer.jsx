@@ -11,7 +11,7 @@ function Footer() {
   return (
     <div className="ft-main">
       <div className="ft-details">
-        <img src="images/CSfresh.png" alt="CS logo" className="ft-img" />
+        <img src="images/footerlogo.png" alt="CS logo" className="ft-img" />
         <PlaceIcon />
         <span>197/5, Wataddara Veyangoda</span>
         <br /> <PhoneIcon />
@@ -21,7 +21,12 @@ function Footer() {
         <span>kalumnet@gmail.com</span>
       </div>
       <div className="ft-links">
-        <span>Home</span> <span>About Us</span>
+      <div className='links'>
+                <span><a href = "">Home</a>&nbsp;&nbsp;&nbsp;</span>
+                <span><a href = "">About Us</a>&nbsp;&nbsp;&nbsp;</span>
+                <span><a href = "">Why Us</a>&nbsp;&nbsp;&nbsp;</span>
+                <span><a href = "">Vision</a></span>
+            </div>
         <br />
         <p
           style={{
@@ -36,7 +41,9 @@ function Footer() {
       </div>
       <div className="ft-media commn">
         <h5>Search Us On</h5>
-        <FacebookIcon /> <InstagramIcon /> <LinkedInIcon />
+            <a href = 'https://www.facebook.com'><FacebookIcon /></a> 
+            <a href = 'https://www.instagram.com'><InstagramIcon /></a> 
+            <a href = 'https://www.linkedin.com'><LinkedInIcon /></a>
       </div>
     </div>
   );

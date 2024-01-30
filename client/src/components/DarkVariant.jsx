@@ -3,12 +3,15 @@ import Carousel from "react-bootstrap/Carousel";
 import Button from "react-bootstrap/Button";
 import "../components/styles/carouStyle.css";
 import LogInForm from "./LogInForm";
+import AdminLogInForm from "./AdminLoginForm";
 import ReactDOM from "react-dom";
+
 //import { useNavigate } from "react-router-dom";
 
 function DarkVariant() {
   //const Navigate = useNavigate();
   const [isLoginFormVisible, setLoginFormVisible] = useState(false);
+  const [isAdminLoginFormVisible, setAdminLoginFormVisible] = useState(false);
 
   const openLoginForm = () => {
     setLoginFormVisible(true);
@@ -16,6 +19,14 @@ function DarkVariant() {
 
   const closeLoginForm = () => {
     setLoginFormVisible(false);
+  };
+
+  const openAdminLoginForm = () => {
+    setAdminLoginFormVisible(true);
+  };
+
+  const closeAdminLoginForm = () => {
+    setAdminLoginFormVisible(false);
   };
   return (
     <div>
@@ -44,8 +55,13 @@ function DarkVariant() {
               {" "}
               Bringing Sri Lanka's Finest Vegetables
               <br />
-              and Fruits to the World.
-            </h3>
+
+
+              and Fruits to the World.</h3>
+              <Button onClick={() => openAdminLoginForm()} variant="primary" size="lg">
+              ADMIN LOGIN
+            </Button>{" "}
+
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item className="c-item">
@@ -66,7 +82,12 @@ function DarkVariant() {
         ReactDOM.createPortal(
           <LogInForm onClose={closeLoginForm} />,
           document.body
-        )}
+          )}
+      {isAdminLoginFormVisible &&
+            ReactDOM.createPortal(
+              <AdminLogInForm onClose={closeAdminLoginForm} />,
+              document.body
+              )}
     </div>
   );
 }
