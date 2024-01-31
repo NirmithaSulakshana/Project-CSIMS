@@ -40,9 +40,10 @@ function Sign() {
 
   const handleSubmit = (event) => {
     const form = event.currentTarget;
+    event.preventDefault();
     console.log("Form:", form);
     if (form.checkValidity() === false || !passwordsMatch) {
-      event.preventDefault();
+      setValidated(true);
       event.stopPropagation();
     } else {
       // Display a confirmation dialog

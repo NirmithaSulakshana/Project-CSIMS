@@ -317,8 +317,8 @@ const AdminSignupC = () => {
                                 type="password"
                                 value={formData.confirmpassword}
                                 onChange={handleFormChange}
-                                error={!!errors.confirmPassword}
-                                helperText={errors.confirmPassword}
+                                error={!!errors.confirmpassword}
+                                helperText={errors.confirmpassword}
                                 placeholder="Type here"
                                 InputProps={{
                                     style: { backgroundColor: 'white', 
