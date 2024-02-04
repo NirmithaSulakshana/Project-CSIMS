@@ -16,7 +16,10 @@ import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { showErrorToast, showSuccessToast } from "../components/ToasterMessage";
-
+import { FaUserAlt } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
+import { GiWeight } from "react-icons/gi";
+import { AiOutlineMessage } from "react-icons/ai";
 function Order() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
@@ -90,6 +93,14 @@ function Order() {
     setAddedItems(updatedItems);
   };
 
+  const handleReset = () => {
+    // Define your reset logic here
+    setSearchTerm("");
+    setQuantity(0);
+    setAddedItems([]);
+  };
+  
+
   return (
     <div>
       <div className="container">
@@ -97,27 +108,90 @@ function Order() {
           className="column1"
           style={{ backgroundImage: "url(/images/basket.jpg)" }}
         >
-          <Form className="d-flex align-items-center justify-content-between">
-            <Form.Control
-              type="search"
-              placeholder="Search Item"
-              className="me-2"
-              aria-label="Search"
-              value={searchTerm}
-              onChange={handleSearch}
-            />
-            <Form.Control
-              type="number"
-              placeholder="Quantity"
-              className="me-2"
-              aria-label="Quantity"
-              value={quantity}
-              onChange={handleQuantityChange}
-              style={{ width: "20%" }}
-            />
-            <Button variant="outline-success" onClick={handleAddItem}>
-              ADD
-            </Button>
+          <Form className="d-flex flex-column align-items-start justify-content-between">
+          <Form.Group className="mb-2">
+          <Form.Label>Buyer Name</Form.Label>
+          <div className="d-flex align-items-center"> {/* Use d-flex to create a flex container */}
+        
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="Buyer Name"
+                  name="Name"
+                  style={{ width: "150%" }}
+                  />
+                  <FaUserAlt style={{ marginLeft: "20px" , fontSize: "2.5rem"}} /> {/* Add the icon with some right margin */}
+                </div>
+          </Form.Group>
+          
+    <Form.Group className="mb-2">
+        <Form.Label>Item Name</Form.Label>
+        <div className="d-flex align-items-center">
+        <Form.Control
+            type="search"
+            placeholder="Search Item"
+            aria-label="Search"
+            value={searchTerm}
+            onChange={handleSearch}
+            style={{ width: "150%" }}
+        /><FaSearch style={{ marginLeft: "20px" , fontSize: "2.5rem"}} />
+        </div>
+    </Form.Group>
+    <Form.Group className="mb-2">
+        <Form.Label>Quantity</Form.Label>
+        <div className="d-flex align-items-center">
+        <Form.Control
+            type="number"
+            placeholder="Quantity"
+            aria-label="Quantity"
+            value={quantity}
+            onChange={handleQuantityChange}
+            style={{ width: "150%" }}
+            
+        /><GiWeight style={{ marginLeft: "20px" , fontSize: "2.5rem"}} />
+        </div>
+    </Form.Group>
+    <Form.Group className="mb-2">
+    
+        <Form.Label>Message</Form.Label>
+        <div className="d-flex align-items-center">
+        <Form.Control
+          type="textarea"
+            rows={3}
+            placeholder="Enter Message"
+            aria-label="Message"
+            style={{ width: "150%" }}
+            
+        /><AiOutlineMessage style={{ marginLeft: "20px" , fontSize: "2.5rem"}}/>
+        </div>
+      </Form.Group>
+      <div className="d-flex justify-content-between align-items-center" style={{ width: "100%" }}>
+  <div className="d-flex flex-column"> {/* Wrap buttons in a flex-column container */}
+    <Button variant="success" onClick={handleAddItem} style={{ width: "150px" }}>
+      ADD
+    </Button>
+    <Button variant="success" onClick={handleReset} style={{ width: "150px", marginTop: '10px' }}> {/* Adjust width and margin-top */}
+      RESET
+    </Button>
+  </div>
+  <div className="d-flex flex-column"> {/* Wrap buttons in a flex-column container */}
+    <Button
+      variant="success"
+      style={{ width: "150px"}}
+      onClick={logout}
+    >
+      Log Out
+    </Button>
+    <Button
+      variant="success"
+      style={{ width: "150px", marginTop: '10px' }}
+      onClick={orderPlaced}
+    >
+      Place Order
+    </Button>
+  </div>
+</div>
+
           </Form>
         </div>
 
@@ -160,26 +234,7 @@ function Order() {
           </TableContainer>
         </div>
       </div>
-      <div
-        className="d-flex justify-content-center align-items-end"
-        style={{ height: "90%", marginTop: "10px", marginBottom: "10px" }}
-      >
-        <Button
-          variant="success"
-          style={{ width: "250px", marginRight: "10px" }}
-          onClick={logout}
-        >
-          Log Out
-        </Button>
-        {""}
-        <Button
-          variant="success"
-          style={{ width: "250px" }}
-          onClick={orderPlaced}
-        >
-          Place Order
-        </Button>
-      </div>
+      
       <Footer />
       <ToastContainer />
     </div>

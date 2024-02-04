@@ -6,15 +6,20 @@
   }
   
   .column1 {
-    width: 40%;
+    width: 30%;
     height: 490px;
     background-color: yellow;
-    
+    color:white;
     background-size: cover; /* Ensures the background image covers the entire div */
+    padding-left:35px;
+    padding-bottom: 10px;
+    padding-top:10px;
+    padding-right:5px;
+    text-align: center;
   }
   
   .column2 {
-    width: 60%;
+    width: 70%;
     height: 490px;
     background-color: white;
   }
