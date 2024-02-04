@@ -42,6 +42,7 @@ function Sign() {
     const form = event.currentTarget;
     event.preventDefault();
     console.log("Form:", form);
+    event.preventDefault();
     if (form.checkValidity() === false || !passwordsMatch) {
       setValidated(true);
       event.stopPropagation();
