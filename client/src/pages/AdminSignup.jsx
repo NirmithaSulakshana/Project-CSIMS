@@ -9,7 +9,7 @@ import Footer from '../components/Footer';
 const AdminSignupC = () => {
     const [userType, setUserType] = useState('');
     const [formData, setFormData] = useState({
-        fullname: "",
+        firstname: "",
         lastname: "",
         username: '',
         password: '',
@@ -21,7 +21,7 @@ const AdminSignupC = () => {
     });
 
     const [errors, setErrors] = useState({
-        fullname: "",
+        firstname: "",
         lastname: "",
         username: '',
         password: '',
@@ -39,7 +39,7 @@ const AdminSignupC = () => {
     
         // Clear form data when user type changes
         setFormData({
-            fullname: "",
+            firstname: "",
             lastname: "",
             username: '',
             password: '',
@@ -51,7 +51,7 @@ const AdminSignupC = () => {
         });
 
         setErrors({
-            fullname: "",
+            firstname: "",
             lastname: "",
             username: '',
             password: '',
@@ -307,7 +307,7 @@ const AdminSignupC = () => {
                 
                 
                     <div className = "input1">
-                        <div className = "comfirmpassword">
+                        <div className = "confirmpassword">
                             <label>Confirm Password</label>
                         </div>
                     
