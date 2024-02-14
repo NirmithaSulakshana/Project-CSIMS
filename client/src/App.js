@@ -7,20 +7,41 @@ import NavBar from "./components/NavBar";
 import SignC from "./pages/SignC";
 import Order from "./pages/Order";
 
+import AdminSignup from "./pages/AdminSignup";
+
+import { AuthContext } from "./helpers/AuthContext";
+import { useEffect, useState } from "react";
+import AdminPanel from "./pages/AdminPage/adminPanel";
+
+
 function App() {
+  const [authState, setauthState] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem("accessToken")) {
+      setauthState(true);
+    }
+  }, []);
+
   return (
     <div className="App">
       <Headelement />
-      <NavBar />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/AboutUS" element={<AboutUs />} />
-          <Route path="/SignC" element={<SignC />} />
-          <Route path="/Order" element={<Order />} />
 
-        </Routes>
-      </BrowserRouter>
+
+      <AuthContext.Provider value={{ authState, setauthState }}>
+        <NavBar />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/AboutUS" element={<AboutUs />} />
+            <Route path="/SignC" element={<SignC />} />
+            <Route path="/Order" element={<Order />} />
+            <Route path="/AdminSignup" element={<AdminSignup />} />
+            <Route path="/AdminPage" element={<AdminPanel />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthContext.Provider>
+
     </div>
   );
 }

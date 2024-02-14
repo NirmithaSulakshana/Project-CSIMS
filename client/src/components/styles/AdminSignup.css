@@ -1,0 +1,116 @@
+.container1 {
+    width: 100%;
+    height: 100%;
+    
+  }
+
+
+.contentc{
+
+    
+    width: 100%;
+    height: 100%
+}
+
+.signup{
+    z-index: 90;
+    position: absolute;
+    top: 3%;
+    left: 43%;
+    right: 0%;
+    bottom: 0%;
+    width: 10%;
+    font-weight: bold;
+    font-size: 25px;
+    color: black;
+    
+}
+
+.inputs{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    z-index: 99;
+    top: 10%;
+    left: 0%;
+    right: 75%;
+    bottom: 20%;
+    width: 60%;
+   
+}
+
+.input{
+    margin-bottom: 20px;
+    z-index: 0;
+
+}
+
+.inputs1{
+    display: flex;
+    flex-direction: column;
+    z-index: 90;
+    position: absolute;
+    top: 0%;
+    left: 91%;
+    right: 10%;
+    bottom: 0%;
+    width: 60%;
+    
+}
+
+.input1{
+    margin-bottom: 20px;
+}
+
+.inputs4{
+    display: flex;
+    position: absolute;
+    z-index: 90;
+    
+    top: 65%;
+    left: 100%;
+    right: 10%;
+    bottom: 0%;
+    width: 10%;
+    
+}
+
+.input4{
+    margin-top: 20px;
+}
+
+button{
+    display: flex;
+    z-index: 90;
+    
+    top: 60%;
+    left: 37%;
+    right: 10%;
+    bottom: 0%;
+    
+}  
+
+.shape {
+    position:absolute; 
+    top: 50%;
+    left: 10%;
+    right: 10%;
+    bottom: 20%;
+    z-index: 0;
+    height: 15%;
+    width: 80%;
+    
+    background-color: rgba(255, 255, 255, 0.8);
+    padding-top: 625px;
+    
+    border-radius: 10px;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 1.0);
+}
+
+.contentc img{
+    
+    
+    margin-top: 0px;
+    width: 100%;
+    height: 80%;
+}
