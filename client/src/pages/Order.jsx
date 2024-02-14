@@ -20,6 +20,7 @@ import { FaUserAlt } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
 import { GiWeight } from "react-icons/gi";
 import { AiOutlineMessage } from "react-icons/ai";
+
 function Order() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
@@ -32,7 +33,7 @@ function Order() {
   };
 
   const orderPlaced = () => {
-    showSuccessToast("Your order placed. Thank yoy!!!");
+    showSuccessToast("Your order placed. Thank you!!!");
   };
 
   const handleSearch = (e) => {
@@ -49,7 +50,7 @@ function Order() {
 
   const handleAddItem = () => {
     if (searchTerm.trim() === "") {
-      showErrorToast("Please enter a item name");
+      showErrorToast("Please enter an item name");
       return;
     }
     if (quantity === 0) {
@@ -86,6 +87,7 @@ function Order() {
         showErrorToast("Search Item Not Found");
         console.error("Error adding item:", error);
       });
+      
   };
 
   const handleRemoveItem = (itemId) => {
@@ -102,109 +104,103 @@ function Order() {
   
 
   return (
-    <div>
+    <div className="page-wrapper">
+       <div className="content-wrapper">
       <div className="container">
         <div
           className="column1"
           style={{ backgroundImage: "url(/images/basket.jpg)" }}
         >
           <Form className="d-flex flex-column align-items-start justify-content-between">
-          <Form.Group className="mb-2">
-          <Form.Label>Buyer Name</Form.Label>
-          <div className="d-flex align-items-center"> {/* Use d-flex to create a flex container */}
-        
+            <Form.Group className="mb-2">
+              <Form.Label>Buyer Name</Form.Label>
+              <div className="d-flex align-items-center">
                 <Form.Control
                   required
                   type="text"
                   placeholder="Buyer Name"
                   name="Name"
                   style={{ width: "150%" }}
-                  />
-                  <FaUserAlt style={{ marginLeft: "20px" , fontSize: "2.5rem"}} /> {/* Add the icon with some right margin */}
-                </div>
-          </Form.Group>
-          
-    <Form.Group className="mb-2">
-        <Form.Label>Item Name</Form.Label>
-        <div className="d-flex align-items-center">
-        <Form.Control
-            type="search"
-            placeholder="Search Item"
-            aria-label="Search"
-            value={searchTerm}
-            onChange={handleSearch}
-            style={{ width: "150%" }}
-        /><FaSearch style={{ marginLeft: "20px" , fontSize: "2.5rem"}} />
-        </div>
-    </Form.Group>
-    <Form.Group className="mb-2">
-        <Form.Label>Quantity</Form.Label>
-        <div className="d-flex align-items-center">
-        <Form.Control
-            type="number"
-            placeholder="Quantity"
-            aria-label="Quantity"
-            value={quantity}
-            onChange={handleQuantityChange}
-            style={{ width: "150%" }}
+                />
+                <FaUserAlt style={{ marginLeft: "20px" , fontSize: "2.5rem"}} />
+              </div>
+            </Form.Group>
             
-        /><GiWeight style={{ marginLeft: "20px" , fontSize: "2.5rem"}} />
-        </div>
-    </Form.Group>
-    <Form.Group className="mb-2">
-    
-        <Form.Label>Message</Form.Label>
-        <div className="d-flex align-items-center">
-        <Form.Control
-          type="textarea"
-            rows={3}
-            placeholder="Enter Message"
-            aria-label="Message"
-            style={{ width: "150%" }}
+            <Form.Group className="mb-2">
+              <Form.Label>Item Name</Form.Label>
+              <div className="d-flex align-items-center">
+                <Form.Control
+                  type="search"
+                  placeholder="Search Item"
+                  aria-label="Search"
+                  value={searchTerm}
+                  onChange={handleSearch}
+                  style={{ width: "150%" }}
+                />
+                <FaSearch style={{ marginLeft: "20px" , fontSize: "2.5rem"}} />
+              </div>
+            </Form.Group>
             
-        /><AiOutlineMessage style={{ marginLeft: "20px" , fontSize: "2.5rem"}}/>
-        </div>
-      </Form.Group>
-      <div className="d-flex justify-content-between align-items-center" style={{ width: "100%" }}>
-  <div className="d-flex flex-column"> {/* Wrap buttons in a flex-column container */}
-    <Button variant="success" onClick={handleAddItem} style={{ width: "150px" }}>
-      ADD
-    </Button>
-    <Button variant="success" onClick={handleReset} style={{ width: "150px", marginTop: '10px' }}> {/* Adjust width and margin-top */}
-      RESET
-    </Button>
-  </div>
-  <div className="d-flex flex-column"> {/* Wrap buttons in a flex-column container */}
-    <Button
-      variant="success"
-      style={{ width: "150px"}}
-      onClick={logout}
-    >
-      Log Out
-    </Button>
-    <Button
-      variant="success"
-      style={{ width: "150px", marginTop: '10px' }}
-      onClick={orderPlaced}
-    >
-      Place Order
-    </Button>
-  </div>
-</div>
-
+            <Form.Group className="mb-2">
+              <Form.Label>Quantity</Form.Label>
+              <div className="d-flex align-items-center">
+                <Form.Control
+                  type="number"
+                  placeholder="Quantity"
+                  aria-label="Quantity"
+                  value={quantity}
+                  onChange={handleQuantityChange}
+                  style={{ width: "150%" }}
+                />
+                <GiWeight style={{ marginLeft: "20px" , fontSize: "2.5rem"}} />
+              </div>
+            </Form.Group>
+            
+            <Form.Group className="mb-2">
+              <Form.Label>Message</Form.Label>
+              <div className="d-flex align-items-center">
+                <Form.Control
+                  type="textarea"
+                  rows={3}
+                  placeholder="Enter Message"
+                  aria-label="Message"
+                  style={{ width: "150%" }}
+                />
+                <AiOutlineMessage style={{ marginLeft: "20px" , fontSize: "2.5rem"}}/>
+              </div>
+            </Form.Group>
+            
+            <div className="d-flex justify-content-between align-items-center" style={{ width: "100%" }}>
+              <div className="d-flex flex-column">
+                <Button variant="success" onClick={handleAddItem} style={{ width: "150px" }}>
+                  ADD
+                </Button>
+                <Button variant="success" onClick={handleReset} style={{ width: "150px", marginTop: '10px' }}>
+                  RESET
+                </Button>
+              </div>
+              <div className="d-flex flex-column">
+                <Button variant="success" style={{ width: "150px"}} onClick={logout}>
+                  Log Out
+                </Button>
+                <Button variant="success" style={{ width: "150px", marginTop: '10px' }} onClick={orderPlaced}>
+                  Place Order
+                </Button>
+              </div>
+            </div>
           </Form>
         </div>
 
-        <div className="column2" style={{ overflow: "auto" }}>
+        <div className="column2" style={{ overflowX: "auto" }}>
           <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 700 }} aria-label="spanning table">
+            <Table sx={{ minWidth: 700, border: '1px solid black' }} aria-label="spanning table">
               <TableHead>
                 <TableRow>
                   <TableCell>
                     <strong>Item Name</strong>
                   </TableCell>
                   <TableCell align="right">
-                    <strong>Qty.</strong>
+                    <strong>Quantity</strong>
                   </TableCell>
                   <TableCell align="right">
                     <strong>Unit Price($)</strong>
@@ -234,8 +230,10 @@ function Order() {
           </TableContainer>
         </div>
       </div>
-      
+      </div>
+      <div>
       <Footer />
+      </div>
       <ToastContainer />
     </div>
   );
