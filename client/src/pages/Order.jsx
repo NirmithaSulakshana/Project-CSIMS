@@ -102,7 +102,6 @@ function Order() {
     setAddedItems([]);
   };
   
-
   return (
     <div className="page-wrapper">
        <div className="content-wrapper">

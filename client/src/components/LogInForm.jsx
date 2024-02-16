@@ -93,7 +93,8 @@ function LogInForm({ onClose }) {
               <p>
                 Don't have any account
                 <br />
-                <Link to="/SignC">Create Account</Link>
+                <Link to="/SignC" style={{ color: 'blue' }}>Create Account</Link>
+
               </p>
             </td>
           </tr>

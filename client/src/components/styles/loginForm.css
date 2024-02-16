@@ -1,58 +1,59 @@
-.lg-main {
-    width: 60%;
-    height: 70%;
-    flex-shrink: 0;
-    display: flex;
-    border-radius: 60px;
-    opacity: 1;
-    background: #2e7d32;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 60px;
-    margin: 10px;
-  }
-  
-  
-  
-  
-  .lg-head {
-    background-color: white;
-    flex: 1;
-    margin: 8px;
-    padding: 16px;
-    border: 1px solid #ccc;
-    text-align: center;
-    font-weight: bold;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* To evenly distribute elements vertically */
-  }
-  
-  .ft1-img {
-    margin-top: 40px;
-    display: block;
-    margin: 0 auto; /* Center the image horizontally */
-  display: block;
-  }
-  
-  .lg-table {
-    width: 100%;
-  }
-  
-  .lg-table td {
-    padding: 5px;
-  }
-  
-  
-  
-  .lg-table .lg-head-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-   /* Adjust as needed */
-  }
-  
+/* loginForm.css */
 
-  
+.lg-main {
+  width: 60%;
+  height: 70%;
+  flex-shrink: 0;
+  display: flex;
+  border-radius: 60px;
+  opacity: 1;
+  background: #2e7d32;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 60px;
+  margin: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .lg-main {
+      width: 90%; /* Adjust width for smaller screens */
+      height: auto; /* Adjust height to fit content */
+      padding: 20px; /* Adjust padding for smaller screens */
+  }
+}
+
+.lg-head {
+  background-color: white;
+  flex: 1;
+  margin: 8px;
+  padding: 16px;
+  border: 1px solid #ccc;
+  text-align: center;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* To evenly distribute elements vertically */
+}
+
+.ft1-img {
+  margin-top: 40px;
+  display: block;
+  margin: 0 auto; /* Center the image horizontally */
+  display: block;
+}
+
+.lg-table {
+  width: 100%;
+}
+
+.lg-table td {
+  padding: 5px;
+}
+
+.lg-table .lg-head-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px; /* Adjust as needed */
+}
