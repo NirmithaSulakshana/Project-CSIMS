@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { List, ListItem, ListItemText, Divider, Stack,  } from '@mui/material';
+import {Box, List, ListItem, ListItemText, Divider, Stack,  } from '@mui/material';
 import NewRequest from "./newRequest"
 import AddNewItem from "./addNewItem"
 import UpdateItems from "./updateItems"
@@ -66,28 +66,40 @@ const AdminPanel = () => {
                         border: "0px solid #000000" }}>
 
           
-          <ListItem  button onClick={() => setSelectedSection('newRequest')} >
-            <ListItemText primary="New Request" />
+<ListItem button onClick={() => setSelectedSection('newRequest')} style={{ textAlign: 'center' }}>
+            <Box style={{ backgroundColor: 'darkgreen', padding: '5px',width: '200px', height: '55px',display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <ListItemText primary="New Request" />
+              </Box>
           </ListItem>
           <Divider />
-          <ListItem button onClick={() => setSelectedSection('addNewItem')}>
+          <ListItem button onClick={() => setSelectedSection('addNewItem')} style={{ textAlign: 'center' }}>
+          <Box style={{ backgroundColor: 'darkgreen', padding: '5px', width: '200px', height: '60px',display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <ListItemText primary="Add New Item" />
+            </Box>
           </ListItem>
           <Divider />
-          <ListItem button onClick={() => setSelectedSection('updateItems')}>
+          <ListItem button onClick={() => setSelectedSection('updateItems')} style={{ textAlign: 'center' }}>
+          <Box style={{ backgroundColor: 'darkgreen', padding: '5px', width: '200px', height: '60px',display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
             <ListItemText primary="Update Items" />
+            </Box>
           </ListItem>
           <Divider />
-          <ListItem button onClick={() => setSelectedSection('orders')}>
+          <ListItem button onClick={() => setSelectedSection('orders')}style={{ textAlign: 'center' }}>
+          <Box style={{ backgroundColor: 'darkgreen', padding: '5px', width: '200px', height: '60px',display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
             <ListItemText primary="Orders" />
+            </Box>
           </ListItem>
           <Divider />
-          <ListItem button onClick={() => setSelectedSection('packing')}>
+          <ListItem button onClick={() => setSelectedSection('packing')}style={{ textAlign: 'center' }}>
+          <Box style={{ backgroundColor: 'darkgreen', padding: '5px',width: '200px', height: '60px',display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <ListItemText primary="Packing" />
+            </Box>
           </ListItem>
           <Divider />
-          <ListItem button onClick={() => setSelectedSection('documents')}>
+          <ListItem button onClick={() => setSelectedSection('documents')}style={{ textAlign: 'center' }}>
+          <Box style={{ backgroundColor: 'darkgreen', padding: '5px' ,width: '200px', height: '60px',display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
             <ListItemText primary="Documents" />
+            </Box>
           </ListItem>
         </List>
         )}

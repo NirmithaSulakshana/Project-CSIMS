@@ -10,8 +10,10 @@ import Button from 'react-bootstrap/Button';
 const UpdateItems = () => {
   return (
     <div>
+       <div style={{ paddingTop: '35px' }}>
       {/* Content for Update Items section */}
-      <h2>Update Items Section</h2>
+        <h2>Update Items </h2>
+      </div>
       <div style={{ paddingTop: '35px' }}>
         <Form>
          
@@ -20,30 +22,34 @@ const UpdateItems = () => {
             type="text"
             placeholder="Enter barcode No"
             name="Barcode_No"
+            style={{ width: '700px' }}
           />
-          Item Name
+          <Form.Label>Item Name</Form.Label>
           <Form.Control
           
             required
             type="text"
             placeholder="Type here"
             name="Item_Name"
+            style={{ width: '700px' }}
           />
 
-          <Form.Label style={{ textAlign: 'left' }}>Botanical Name</Form.Label>
+          <Form.Label >Botanical Name</Form.Label>
           <Form.Control
             required
             type="text"
             placeholder="Type here"
             name="Botanical_Name"
+            style={{ width: '700px' }}
           />
 
-          <Form.Label style={{ textAlign: 'left' }}>Unit Price</Form.Label>
+          <Form.Label >Unit Price</Form.Label>
           <Form.Control
             required
             type="text"
             placeholder="Type here"
             name="Unit_Price"
+            style={{ width: '700px' }}
           />
 
 

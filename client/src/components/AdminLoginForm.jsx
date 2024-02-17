@@ -46,7 +46,7 @@ function AdminLogInForm({ onClose }) {
             <td>
             <p>
               Don't have any account<br/>
-              <Link to="/AdminSignup">Create Account</Link>
+              <Link to="/AdminSignup" style={{ color: 'blue' }}>Create Account</Link>
             </p>
             </td>
           </tr>
