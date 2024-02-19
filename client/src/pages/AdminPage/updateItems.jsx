@@ -24,7 +24,7 @@ const UpdateItems = () => {
             name="Barcode_No"
             style={{ width: '700px' }}
           />
-          <Form.Label>Item Name</Form.Label>
+          <Form.Label style={{paddingRight: "58%", marginBottom: "0px", marginTop: "25px"}}>Item Name</Form.Label>
           <Form.Control
           
             required
@@ -34,7 +34,7 @@ const UpdateItems = () => {
             style={{ width: '700px' }}
           />
 
-          <Form.Label >Botanical Name</Form.Label>
+          <Form.Label style={{paddingRight: "55%" , marginBottom: "0px", marginTop: "25px"}} >Botanical Name</Form.Label>
           <Form.Control
             required
             type="text"
@@ -43,7 +43,7 @@ const UpdateItems = () => {
             style={{ width: '700px' }}
           />
 
-          <Form.Label >Unit Price</Form.Label>
+          <Form.Label style={{paddingRight: "59%" , marginBottom: "0px", marginTop: "25px"}}>Unit Price</Form.Label>
           <Form.Control
             required
             type="text"
@@ -53,7 +53,7 @@ const UpdateItems = () => {
           />
 
 
-          <FormLabel id="demo-row-radio-buttons-group-label">Behaviours</FormLabel>
+          <FormLabel id="demo-row-radio-buttons-group-label" style={{paddingRight: "58%", marginTop: "25px"}}>Behaviours</FormLabel>
           <RadioGroup
             row
             aria-labelledby="demo-row-radio-buttons-group-label"

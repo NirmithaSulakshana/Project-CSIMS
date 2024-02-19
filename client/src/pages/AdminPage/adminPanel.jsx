@@ -38,14 +38,14 @@ const AdminPanel = () => {
 
     const MenuButton = () => (
       <button onClick={() => setShowList(!showList)} style={{ backgroundColor: '#373A38', border: '1px solid #373A38' }}>
-        {showList ? <Menu sx = {{color : "#ffffff"}}/> : <Menu sx = {{color : "#ffffff"}}/>}
+        {showList ? <Menu sx = {{color : "#ffffff", marginTop: "10px"}}/> : <Menu sx = {{color : "#ffffff", marginTop: "10px"}}/>}
       </button>
     );
   
     return (
 
     
-      <div style={{ display: '', height: "100%", width: "100%", margin: "0pxs" }}>
+      <div style={{ display: '', height: "100%", width: "100%", margin: "0px" }}>
           
         <Stack direction = "row" sx={{ width: '100%' }}>
         <div style = {{paddingBottom: "50%", backgroundColor: "#373A38", width: "3%", border: "0px solid #000000"}}>
@@ -57,50 +57,54 @@ const AdminPanel = () => {
         
         {showList && (
         <List style={{ width: '100%', 
-                        paddingBottom: '325%', 
-                         
-                        // height: '85%', 
+                        height: '100%', 
                         marginTop: "0%",
                         backgroundColor: '#373A38', 
                         color:"#ffffff",
                         border: "0px solid #000000" }}>
-
-          
-<ListItem button onClick={() => setSelectedSection('newRequest')} style={{ textAlign: 'center' }}>
-            <Box style={{ backgroundColor: 'darkgreen', padding: '5px',width: '200px', height: '55px',display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+         <hr/>
+        <ListItem button onClick={() => setSelectedSection('newRequest')} style={{ textAlign: 'center' }}>
+            <Box style={{ backgroundColor: '', padding: '5px',width: '200px', height: '55px',display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+           
               <ListItemText primary="New Request" />
-              </Box>
+            </Box>
           </ListItem>
           <Divider />
+          <hr/>
           <ListItem button onClick={() => setSelectedSection('addNewItem')} style={{ textAlign: 'center' }}>
-          <Box style={{ backgroundColor: 'darkgreen', padding: '5px', width: '200px', height: '60px',display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Box style={{ backgroundColor: 'd', padding: '5px', width: '200px', height: '60px',display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <ListItemText primary="Add New Item" />
             </Box>
           </ListItem>
           <Divider />
+          <hr/>
           <ListItem button onClick={() => setSelectedSection('updateItems')} style={{ textAlign: 'center' }}>
-          <Box style={{ backgroundColor: 'darkgreen', padding: '5px', width: '200px', height: '60px',display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+          <Box style={{ backgroundColor: '', padding: '5px', width: '200px', height: '60px',display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
             <ListItemText primary="Update Items" />
             </Box>
           </ListItem>
           <Divider />
+          <hr/>
           <ListItem button onClick={() => setSelectedSection('orders')}style={{ textAlign: 'center' }}>
-          <Box style={{ backgroundColor: 'darkgreen', padding: '5px', width: '200px', height: '60px',display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+          <Box style={{ backgroundColor: '', padding: '5px', width: '200px', height: '60px',display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
             <ListItemText primary="Orders" />
             </Box>
           </ListItem>
           <Divider />
+          <hr/>
           <ListItem button onClick={() => setSelectedSection('packing')}style={{ textAlign: 'center' }}>
-          <Box style={{ backgroundColor: 'darkgreen', padding: '5px',width: '200px', height: '60px',display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Box style={{ backgroundColor: '', padding: '5px',width: '200px', height: '60px',display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <ListItemText primary="Packing" />
             </Box>
           </ListItem>
           <Divider />
+          <hr/>
           <ListItem button onClick={() => setSelectedSection('documents')}style={{ textAlign: 'center' }}>
-          <Box style={{ backgroundColor: 'darkgreen', padding: '5px' ,width: '200px', height: '60px',display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+          <Box style={{ backgroundColor: '', padding: '5px' ,width: '200px', height: '60px',display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
             <ListItemText primary="Documents" />
             </Box>
           </ListItem>
+          <hr/>
         </List>
         )}
       </div>
@@ -108,7 +112,7 @@ const AdminPanel = () => {
         
           <div style={{ flex: showList ? 1 : 2, 
                         paddingBottom: '50%', 
-                        // height:"85%", 
+                        //height:"85%", 
                         marginTop: "0%", 
                         backgroundColor: "#C7E0CC", 
                         border: "0px solid #000000" }}>
