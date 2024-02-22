@@ -10,14 +10,32 @@ const countryCodes = {
   // Add more country codes as needed
 };
 
+const initialFormData = {
+  firstName: "Kamal",
+  lastName: "Perera",
+  email: "",
+  userName: "",
+  password: "",
+  confirmPassword: "",
+  country: "",
+  mobileNo: "",
+  agreeTerms: false,
+};
+
 function Sign() {
   const [validated, setValidated] = useState(false);
+  const [formData, setFormData] = useState({ ...initialFormData });
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordsMatch, setPasswordsMatch] = useState(true);
   const [mobile, setMobile] = useState("");
   const [email, setEmail] = useState("");
   const [country, setCountry] = useState("");
+
+  const handleReset = () => {
+    setFormData({ ...initialFormData });
+    setValidated(false);
+  };
 
   const handleMobileChange = (event) => {
     setMobile(event.target.value);
@@ -104,9 +122,21 @@ function Sign() {
       .post("http://localhost:3001/api/users/register", data)
       .then((response) => {
         console.log(response);
+        sendEmailToAdmin(data);
       })
       .catch((error) => {
         console.error("Error registering user:", error);
+      });
+  };
+
+  const sendEmailToAdmin = (formData) => {
+    axios
+      .post("http://localhost:3001/api/mail/send-email", formData)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error("Error sending email to admin:", error);
       });
   };
 
@@ -251,8 +281,11 @@ function Sign() {
             </div>
             <div className="centered1-container">
               <Button type="submit" variant="success">
-                Create Account
+                Request to Create Account
               </Button>{" "}
+              <Button type="reset" variant="success" onClick={handleReset}>
+                Reset
+              </Button>
             </div>
           </Form>
         </div>
