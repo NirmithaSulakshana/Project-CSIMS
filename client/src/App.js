@@ -6,7 +6,7 @@ import AboutUs from "./pages/AboutUs";
 import NavBar from "./components/NavBar";
 import SignC from "./pages/SignC";
 import Order from "./pages/Order";
-
+import SalesManagerOrders from "./pages/SalesManagerPage/orders"
 import AdminSignup from "./pages/AdminSignup";
 
 import { AuthContext } from "./helpers/AuthContext";
@@ -40,6 +40,7 @@ function App() {
             <Route path="/AdminSignup" element={<AdminSignup />} />
             <Route path="/AdminPage" element={<AdminPanel />} />
             <Route path="/SalesManagerPage" element={<SalesManagerPanel />} />
+            <Route path="/SalesManagerOrders" element={<SalesManagerOrders />} />
           </Routes>
         </BrowserRouter>
       </AuthContext.Provider>
