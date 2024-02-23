@@ -45,13 +45,14 @@ mailRouter.post("/send-email", async (req, res) => {
     to: "harshagihan50@gmail.com",
     subject: "New Account Request",
     html: `
-        <p>You have a new account request.</p>
+        <p>You have a new account request from new customer.</p>
         <p>First Name: ${formData.firstName}</p>
         <p>Last Name: ${formData.lastName}</p>
         <p>Email: ${formData.email}</p>
         <p>Username: ${formData.userName}</p>
         <p>Country: ${formData.country}</p>
         <p>Mobile Number: ${formData.mobileNo}</p>
+        <p>Request submitted on: ${new Date().toLocaleString()}</p>
       `,
   };
 
