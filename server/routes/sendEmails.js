@@ -52,6 +52,8 @@ mailRouter.post("/send-email", async (req, res) => {
         <p>Username: ${formData.userName}</p>
         <p>Country: ${formData.country}</p>
         <p>Mobile Number: ${formData.mobileNo}</p>
+        <p>Request submitted on: ${new Date().toLocaleString()}</p>
+
       `,
   };
 
