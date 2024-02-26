@@ -40,6 +40,7 @@ const UpdateStock = () => {
                 <br/>
                 <TextField
                   name="supplierName"
+                  type = "text"
                   value={formData.supplierName}
                   onChange={handleChange}
                   placeholder="Supplier Name"
@@ -66,9 +67,10 @@ const UpdateStock = () => {
             
             <TextField
               name="itemName"
+              type = "text"
               value={formData.itemName}
               onChange={handleChange}
-              placeholder="Item Name"
+              placeholder="Search"
               inputProps={{
                 style : 
                 { width: '700px', 
@@ -92,9 +94,10 @@ const UpdateStock = () => {
             <TextField
               
               name="quantity"
+              type = "number"
               value={formData.quantity}
               onChange={handleChange}
-              placeholder="Quantity"
+              placeholder="KG"
               inputProps={{
                 style : 
                 { width: '700px', 
@@ -103,6 +106,8 @@ const UpdateStock = () => {
                   height : "10px",
                   boxShadow: '0 2px 4px rgba(0, 0, 0, 0.5)'
                 },
+                min: 0, 
+                
 
               }}
               
@@ -117,6 +122,7 @@ const UpdateStock = () => {
             
             <TextField
               name="price"
+              type = "number"
               value={formData.price}
               onChange={handleChange}
               placeholder="Price"
@@ -128,6 +134,8 @@ const UpdateStock = () => {
                   height : "10px",
                   boxShadow: '0 2px 4px rgba(0, 0, 0, 0.5)'
                 },
+                min: 0, 
+                
 
               }}
               
