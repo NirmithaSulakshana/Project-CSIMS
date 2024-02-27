@@ -1,0 +1,20 @@
+
+#add-new-item-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 30px; 
+    
+}
+
+#add-new-item-form input{
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+    border: 1px solid rgb(139, 139, 139);
+}
+
+select {
+    width: 100px;
+}
+
