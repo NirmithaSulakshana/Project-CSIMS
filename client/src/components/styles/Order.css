@@ -14,7 +14,7 @@
   flex:  1;
   width:  100%;
   padding:  20px;
-  overflow-y: auto;
+  overflow: auto;
 }
 .column1 {
   flex: 1;
@@ -32,7 +32,10 @@
   width: 70%;
   height:100%;
   background-color: white;
-  overflow-x: auto; /* Always show vertical scrollbar */
+  overflow: auto; 
+  padding-left: 10px;
+  max-height: 500px;
+  max-width: max-content;
 }
 
 .table-container {
@@ -63,4 +66,10 @@
     max-width: none;
     padding: 10px;
   }
+}
+
+.table_stky{
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
