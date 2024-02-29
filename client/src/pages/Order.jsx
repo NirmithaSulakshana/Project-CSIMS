@@ -54,9 +54,6 @@ function Order() {
         const loggedId = loggedCustomer.id;
         setLoginCustomerId(loggedId);
         setLoginCustomerFname(loggedFirstName);
-        //console.log(loginCustomer);
-        //console.log("Logged-in first name:", loggedFirstName);
-        //console.log("Logged-in first name:", loggedId);
       } else {
         console.log("Customer not found for the logged-in email.");
       }
@@ -189,11 +186,6 @@ function Order() {
         console.error("Error adding item:", error);
       });
   };
-
-  // const handleRemoveItem = (itemId) => {
-  //   const updatedItems = addedItems.filter((item) => item.id !== itemId);
-  //   setAddedItems(updatedItems);
-  // };
 
   const handleReset = () => {
     // Define your reset logic here
@@ -397,11 +389,24 @@ function Order() {
                                 quantities[item.id] &&
                                 quantities[item.id][customer.id]
                               ) {
-                                alert(
-                                  `${quantities[item.id][customer.id]} kg of ${
-                                    item.itemName
-                                  } for ${customer.firstName} `
+                                const confirmDelete = window.confirm(
+                                  `Do you want to delete ${
+                                    quantities[item.id][customer.id]
+                                  } kg of ${item.itemName} for ${
+                                    customer.firstName
+                                  }?`
                                 );
+
+                                if (confirmDelete) {
+                                  // User clicked "OK", delete the quantity
+                                  setQuantities((prevQuantities) => {
+                                    const updatedQuantities = {
+                                      ...prevQuantities,
+                                    };
+                                    updatedQuantities[item.id][customer.id] = 0;
+                                    return updatedQuantities;
+                                  });
+                                }
                               }
                             }}
                           >
