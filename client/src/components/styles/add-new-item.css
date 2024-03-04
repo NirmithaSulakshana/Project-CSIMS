@@ -16,6 +16,7 @@
 
 select {
     width: 100px;
+    height: 40px;
 }
 
 input[type="text"] {
@@ -23,14 +24,27 @@ input[type="text"] {
     height: 40px;
    }
    
-   label{
+label{
+        margin-top: 10px;
        display: flex;
        justify-content: flex-start;
     }
     
-    input[type="number"] {
-        width: 300px;
+input[type="number"] {
+        width: 200px;
         height: 40px;
 
        }
+
+input[type="text"]:focus {
     
+    outline: none; 
+    box-shadow: 0 0 5px 2px greenyellow;
+}
+input[type="number"]:focus {
+    
+    outline: none; 
+    box-shadow: 0 0 5px 2px greenyellow;
+       
+}
+       
