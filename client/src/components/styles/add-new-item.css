@@ -18,3 +18,19 @@ select {
     width: 100px;
 }
 
+input[type="text"] {
+    width: 500px;
+    height: 40px;
+   }
+   
+   label{
+       display: flex;
+       justify-content: flex-start;
+    }
+    
+    input[type="number"] {
+        width: 300px;
+        height: 40px;
+
+       }
+    
