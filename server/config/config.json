@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "Harshag123",
+    "password": "",
     "database": "loginsch",
     "host": "localhost",
     "dialect": "mysql"
