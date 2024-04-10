@@ -48,6 +48,60 @@ userRouter.get("/getUsers/:id", (req, res) => {
     });
 });
 
+//get Pending user
+userRouter.get("/getPendingUsers", (req, res) => {
+  Users.findAll({ where: { status: "pending" } })
+    .then((pendingUsers) => {
+      res.status(200).json(pendingUsers);
+    })
+    .catch((error) => {
+      console.log("Error retriving pending users", error);
+      res.status(500).json({ message: "Internal server error" });
+    });
+});
+
+//Set Approved users by id
+userRouter.put("/approve/:id", (req, res) => {
+  const userId = req.params.id;
+  Users.findByPk(userId)
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      return user.update({ status: "approved" });
+    })
+    .then(() => {
+      res.status(200).json({ message: "Approved user successfully" });
+    })
+    .catch((error) => {
+      console.log("Error approving user:", error);
+      res.status(500).json({ message: "Internal server error" });
+    });
+});
+
+//Delete user by user id
+userRouter.delete("/reject/:id", (req, res) => {
+  const userId = req.params.id;
+
+  Users.findByPk(userId)
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      return user.destroy();
+    })
+    .then(() => {
+      res
+        .status(200)
+        .json({ message: "User rejected and deleted successfully" });
+    })
+    .catch((error) => {
+      console.error("Error rejecting user:", error);
+      res.status(500).json({ message: "Internal server error" });
+    });
+});
+
 //add new user
 userRouter.post("/register", (req, res) => {
   const { firstName, lastName, email, userName, password, country, mobileNo } =

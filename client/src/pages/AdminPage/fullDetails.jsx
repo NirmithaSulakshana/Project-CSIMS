@@ -7,6 +7,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { lightGreen } from "@mui/material/colors";
+import {
+  showSuccessToast,
+  showErrorToast,
+} from "../../components/ToasterMessage";
+import { ToastContainer } from "react-toastify";
 
 function FullDetails() {
   const { id } = useParams();
@@ -53,42 +58,79 @@ function FullDetails() {
     );
   }
 
-  return (
-    <Box sx={{ padding: 2, marginTop: "5%", backgroundColor: lightGreen }}>
-      <Typography variant="h3" style={{ color: "blue" }}>
-        {"New Customer Request"}
-      </Typography>
-      <Typography variant="h6">
-        {`Details for request from ${requestDetails.firstName} ${requestDetails.lastName}`}
-      </Typography>
-      <Typography>{`Email: ${requestDetails.email}`}</Typography>
-      <Typography>{`Username: ${requestDetails.userName}`}</Typography>
-      <Typography>{`Mobile Number: ${requestDetails.mobileNo}`}</Typography>
-      <Typography>{`Country: ${requestDetails.country}`}</Typography>
-      <Typography>
-        {`Submitted at: ${new Date(requestDetails.createdAt).toLocaleString(
-          undefined,
-          timeOptions
-        )}`}
-      </Typography>
-      <Stack direction="row" spacing={2} sx={{ marginTop: "20px" }}>
-        <Button variant="outlined" color="success">
-          Approve
-        </Button>
-        <Button variant="outlined" color="error">
-          Reject
-        </Button>
-        <Button
-          variant="outlined"
-          color="secondary"
-          onClick={() => {
+  const handleApprove = () => {
+    axios
+      .put(`http://localhost:3001/api/users/approve/${id}`)
+      .then((response) => {
+        if (response.status === 200) {
+          showSuccessToast("Succesfully approved the customer!!");
+          setTimeout(() => {
             navigate(-1);
-          }}
-        >
-          Back
-        </Button>
-      </Stack>
-    </Box>
+          }, 2000);
+        }
+      })
+      .catch((error) => {
+        showErrorToast("Error approving");
+        console.error("Error approving user:", error);
+      });
+  };
+
+  const handleReject = () => {
+    axios
+      .delete(`http://localhost:3001/api/users/reject/${id}`)
+      .then((response) => {
+        if (response.status === 200) {
+          showSuccessToast("Succesfully rejected and remove the customer!!");
+          setTimeout(() => {
+            navigate(-1);
+          }, 2000);
+        }
+      })
+      .catch((error) => {
+        showErrorToast("Error rejecting and removing customer!!");
+        console.error("Error rejecting user:", error);
+      });
+  };
+
+  return (
+    <div>
+      <Box sx={{ padding: 2, marginTop: "5%", backgroundColor: lightGreen }}>
+        <Typography variant="h3" style={{ color: "blue" }}>
+          {"New Customer Request"}
+        </Typography>
+        <Typography variant="h6">
+          {`Details for request from ${requestDetails.firstName} ${requestDetails.lastName}`}
+        </Typography>
+        <Typography>{`Email: ${requestDetails.email}`}</Typography>
+        <Typography>{`Username: ${requestDetails.userName}`}</Typography>
+        <Typography>{`Mobile Number: ${requestDetails.mobileNo}`}</Typography>
+        <Typography>{`Country: ${requestDetails.country}`}</Typography>
+        <Typography>
+          {`Submitted at: ${new Date(requestDetails.createdAt).toLocaleString(
+            undefined,
+            timeOptions
+          )}`}
+        </Typography>
+        <Stack direction="row" spacing={2} sx={{ marginTop: "20px" }}>
+          <Button variant="outlined" color="success" onClick={handleApprove}>
+            Approve
+          </Button>
+          <Button variant="outlined" color="error" onClick={handleReject}>
+            Reject
+          </Button>
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            Back
+          </Button>
+        </Stack>
+      </Box>
+      <ToastContainer />
+    </div>
   );
 }
 

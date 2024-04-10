@@ -13,7 +13,7 @@ const NewRequest = () => {
   const [newRequests, setNewRequests] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3001/api/users/getUsers").then((response) => {
+    axios.get("http://localhost:3001/api/users/getPendingUsers").then((response) => {
       setNewRequests(response.data);
     });
   }, []);

@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Footer from "../components/Footer";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -20,6 +20,7 @@ import { FaUserAlt } from "react-icons/fa";
 import { FaSearch } from "react-icons/fa";
 import { GiWeight } from "react-icons/gi";
 import { AiOutlineMessage } from "react-icons/ai";
+import { MdDelete } from "react-icons/md";
 import { jwtDecode } from "jwt-decode";
 
 function Order() {
@@ -29,7 +30,6 @@ function Order() {
   const [quantity, setQuantity] = useState(0);
   const [customers, setCustomers] = useState([]);
   const [items, setItems] = useState([]);
-  const [quantities, setQuantities] = useState({});
   const [loginCustomerId, setLoginCustomerId] = useState(0);
   const [loginCustomerFname, setLoginCustomerFname] = useState("");
 
@@ -84,38 +84,58 @@ function Order() {
       });
   }, []);
 
+  // Load addedItems from localStorage on component mount
   useEffect(() => {
-    const initialQuantities = {};
-    items.forEach((item) => {
-      initialQuantities[item.id] = {};
-      customers.forEach((customer) => {
-        initialQuantities[item.id][customer.id] = 0;
-      });
-    });
-    setQuantities(initialQuantities);
-  }, [items, customers]);
-
-  // Load quantities from localStorage
-  useEffect(() => {
-    const storedQuantities = localStorage.getItem("quantities");
-    if (storedQuantities) {
-      setQuantities(JSON.parse(storedQuantities));
+    const savedAddedItems = localStorage.getItem("addedItems");
+    if (savedAddedItems) {
+      setAddedItems(JSON.parse(savedAddedItems));
     }
   }, []);
 
-  // Save quantities to localStorage
+  // Save addedItems to localStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem("quantities", JSON.stringify(quantities));
-  }, [quantities]);
+    localStorage.setItem("addedItems", JSON.stringify(addedItems));
+  }, [addedItems]);
 
   const logout = () => {
     localStorage.removeItem("accessToken");
-    localStorage.removeItem("quantities");
+    localStorage.removeItem("addedItems");
     navigate("/");
   };
 
   const orderPlaced = () => {
-    showSuccessToast("Your order placed. Thank you!!!");
+    if (addedItems.length === 0) {
+      showErrorToast("No items added to the order.");
+      return;
+    }
+
+    // Prepare the order details
+    const orderDetails = addedItems.map((item) => ({
+      itemId: item.id,
+      quantity: item.quantity,
+    }));
+
+    console.log(loginCustomerId);
+    console.log(orderDetails);
+
+    // Send the order details to the backend
+    axios
+      .post("http://localhost:3001/api/orders/placeOrder", {
+        customerId: loginCustomerId,
+        orderDetails: orderDetails,
+      })
+      .then((response) => {
+        if (response.data.success) {
+          showSuccessToast("Order placed successfully!");
+          setAddedItems([]);
+        } else {
+          showErrorToast("Failed to place order.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error placing order rrr:", error);
+        showErrorToast("Failed.");
+      });
   };
 
   const handleSearch = (e) => {
@@ -144,26 +164,10 @@ function Order() {
     axios
       .get(`http://localhost:3001/api/items/getItems/${searchTerm}`)
       .then((response) => {
-        const itemId = response.data.id;
-
         // Check if the item already exists in the addedItems array
         const existingItem = addedItems.find(
           (item) => item.id === response.data.id
         );
-
-        setQuantities((prevQuantities) => {
-          const updatedQuantities = { ...prevQuantities };
-
-          if (existingItem) {
-            // If the item exists, update its quantity instead of adding a new one
-            updatedQuantities[itemId][loginCustomerId] += quantity;
-          } else {
-            // If the item doesn't exist, add it to the array
-            updatedQuantities[itemId][loginCustomerId] = quantity;
-          }
-
-          return updatedQuantities;
-        });
 
         if (existingItem) {
           // If the item exists, update its quantity instead of adding a new one
@@ -177,6 +181,7 @@ function Order() {
           // If the item doesn't exist, add it to the array
           setAddedItems([...addedItems, { ...response.data, quantity }]);
         }
+        localStorage.setItem("addedItems", JSON.stringify(addedItems));
 
         setSearchTerm("");
         setQuantity(0);
@@ -185,6 +190,13 @@ function Order() {
         showErrorToast("Search Item Not Found");
         console.error("Error adding item:", error);
       });
+  };
+
+  const handleRemoveItem = (itemId) => {
+    const updatedItems = addedItems.filter((item) => item.id !== itemId);
+    setAddedItems(updatedItems);
+
+    localStorage.setItem("addedItems", JSON.stringify(addedItems));
   };
 
   const handleReset = () => {
@@ -311,115 +323,49 @@ function Order() {
             </Form>
           </div>
 
-          <div className="column2">
-            {items && customers && Object.keys(quantities).length > 0 && (
-              <TableContainer component={Paper}>
-                <Table
-                  sx={{ minWidth: 700, border: "1px solid black" }}
-                  aria-label="spanning table"
-                >
-                  <TableHead>
-                    <TableRow>
-                      <TableCell
-                        style={{
-                          backgroundColor: "#30F4FA",
-                          border: "1px solid black",
-                        }}
-                      >
-                        <strong>Item Name</strong>
-                      </TableCell>
-                      <TableCell
-                        style={{
-                          backgroundColor: "#30F4FA",
-                          border: "1px solid black",
-                        }}
-                      >
-                        <strong>Unit Price($)</strong>
-                      </TableCell>
-                      {customers.map((customer) => (
-                        <TableCell
-                          key={customer.id}
-                          align="center"
-                          style={{
-                            color: "red",
-                            backgroundColor: "yellow",
-                            border: "1px solid black",
-                          }}
+          <div
+            className="column2"
+            style={{ overflowX: "auto", maxHeight: "500px" }}
+          >
+            <TableContainer component={Paper}>
+              <Table
+                sx={{ minWidth: 700, border: "1px solid black" }}
+                aria-label="spanning table"
+              >
+                <TableHead>
+                  <TableRow>
+                    <TableCell>
+                      <strong>Item Name</strong>
+                    </TableCell>
+                    <TableCell align="center">
+                      <strong>Quantity</strong>
+                    </TableCell>
+                    <TableCell align="center">
+                      <strong>Unit Price($)</strong>
+                    </TableCell>
+                    <TableCell align="center"></TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {addedItems.map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell>{item.itemName}</TableCell>
+                      <TableCell align="center">{item.quantity}</TableCell>
+                      <TableCell align="center">{item.unitPrice}</TableCell>
+                      <TableCell align="center">
+                        <Button
+                          variant="outline-danger"
+                          size="sm"
+                          onClick={() => handleRemoveItem(item.id)}
                         >
-                          {customer.firstName}
-                        </TableCell>
-                      ))}
+                          <MdDelete />
+                        </Button>
+                      </TableCell>
                     </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {items.map((item) => (
-                      <TableRow key={item.id}>
-                        <TableCell
-                          style={{
-                            color: "red",
-                            backgroundColor: "#30F4FA",
-                            border: "1px solid black",
-                          }}
-                        >
-                          {item.itemName}
-                        </TableCell>
-                        <TableCell
-                          style={{
-                            color: "red",
-                            backgroundColor: "#30F4FA",
-                            border: "1px solid black",
-                          }}
-                        >
-                          {item.unitPrice}
-                        </TableCell>
-                        {customers.map((customer) => (
-                          <TableCell
-                            key={customer.id}
-                            align="center"
-                            style={{
-                              border: "1px solid black",
-                              cursor:
-                                quantities[item.id] &&
-                                quantities[item.id][customer.id]
-                                  ? "pointer"
-                                  : "default",
-                            }}
-                            onClick={() => {
-                              if (
-                                quantities[item.id] &&
-                                quantities[item.id][customer.id]
-                              ) {
-                                const confirmDelete = window.confirm(
-                                  `Do you want to delete ${
-                                    quantities[item.id][customer.id]
-                                  } kg of ${item.itemName} for ${
-                                    customer.firstName
-                                  }?`
-                                );
-
-                                if (confirmDelete) {
-                                  // User clicked "OK", delete the quantity
-                                  setQuantities((prevQuantities) => {
-                                    const updatedQuantities = {
-                                      ...prevQuantities,
-                                    };
-                                    updatedQuantities[item.id][customer.id] = 0;
-                                    return updatedQuantities;
-                                  });
-                                }
-                              }
-                            }}
-                          >
-                            {quantities[item.id] &&
-                              quantities[item.id][customer.id]}
-                          </TableCell>
-                        ))}
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            )}
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
           </div>
         </div>
       </div>
