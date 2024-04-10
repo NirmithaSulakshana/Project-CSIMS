@@ -3,6 +3,10 @@ import { Form, Col, InputGroup, Button, Row } from "react-bootstrap";
 import "../components/styles/SignC.css";
 import Footer from "../components/Footer";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { showSuccessToast } from "../components/ToasterMessage";
 
 const countryCodes = {
   Italy: "+39",
@@ -31,9 +35,15 @@ function Sign() {
   const [mobile, setMobile] = useState("");
   const [email, setEmail] = useState("");
   const [country, setCountry] = useState("");
+  const navigate = useNavigate();
 
   const handleReset = () => {
-    setFormData({ ...initialFormData });
+    setCountry("");
+    setEmail("");
+    setMobile("");
+    setPassword("");
+    setPasswordsMatch("");
+    setConfirmPassword("");
     setValidated(false);
   };
 
@@ -123,6 +133,11 @@ function Sign() {
       .then((response) => {
         console.log(response);
         sendEmailToAdmin(data);
+
+        showSuccessToast("Request sends to CS Frest, Wait untill accept!");
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
       })
       .catch((error) => {
         console.error("Error registering user:", error);
@@ -287,6 +302,7 @@ function Sign() {
                 Reset
               </Button>
             </div>
+            <ToastContainer />
           </Form>
         </div>
       </div>

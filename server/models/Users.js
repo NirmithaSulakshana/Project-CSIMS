@@ -52,7 +52,53 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
       },
     },
+    status: {
+      type: DataTypes.ENUM("approved", "pending"),
+      allowNull: false,
+      defaultValue: "pending", // You can set a default value if needed
+      validate: {
+        notEmpty: true,
+        isIn: [["approved", "pending"]],
+      },
+    },
   });
+
+  Users.associate = (models) => {
+    Users.belongsToMany(models.Products, {
+      through: "ProductExports",
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE",
+    });
+
+    Users.belongsToMany(models.Items, {
+      through: "UserItems",
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE",
+    });
+  };
+
+  // Users.addHook("afterUpdate", async (user, options) => {
+  //   // Update related products or perform other actions as needed
+  //   await models.Products.update(
+  //     {
+  //       /* update fields for Products based on user changes */
+  //     },
+  //     {
+  //       where: {
+  //         /* condition based on user changes */
+  //       },
+  //       transaction: options.transaction,
+  //     }
+  //   );
+  // });
+
+  // Users.addHook("beforeDestroy", async (user, options) => {
+  //   // Delete related records in ProductExports
+  //   await models.ProductExports.destroy({
+  //     where: { userId: user.id },
+  //     transaction: options.transaction,
+  //   });
+  // });
 
   return Users;
 };

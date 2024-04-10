@@ -22,6 +22,10 @@ app.use("/api/items", itemRoutes);
 const mailRouter = require("./routes/sendEmails");
 app.use("/api/mail", mailRouter);
 
+//Ordder routes
+const orderRouter = require("./routes/order");
+app.use("/api/orders", orderRouter);
+
 db.sequelize.sync().then(() => {
   app.listen(process.env.PORT, () => {
     console.log("Server running on port: ", process.env.PORT);

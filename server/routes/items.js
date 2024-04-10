@@ -46,6 +46,8 @@ itemRouter.post("/addItem", (req, res) => {
   const {
     itemName,
     unitPrice,
+    supplierPrice,
+    quantity,
     botnicalName,
     barcodeNumber,
     cooled,
@@ -72,6 +74,8 @@ itemRouter.post("/addItem", (req, res) => {
       return Items.create({
         itemName,
         unitPrice,
+        supplierPrice,
+        quantity,
         botnicalName,
         barcodeNumber,
         cooled,
