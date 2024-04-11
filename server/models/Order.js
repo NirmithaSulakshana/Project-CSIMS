@@ -7,6 +7,10 @@ module.exports = (sequelize, DataTypes) => {
       //   isJSON: true,
       // },
     },
+    message: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   });
 
   Orders.associate = (models) => {
