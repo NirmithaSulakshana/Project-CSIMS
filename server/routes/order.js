@@ -7,12 +7,17 @@ orderRouter.use(express.json());
 
 // Add orders to table
 orderRouter.post("/placeOrder", (req, res) => {
-  const { customerId, orderDetails } = req.body;
-  console.log("Received request payload:", { customerId, orderDetails });
+  const { customerId, orderDetails, message } = req.body;
+  console.log("Received request payload:", {
+    customerId,
+    orderDetails,
+    message,
+  });
 
   Orders.create({
     UserId: customerId,
     orderDetails: orderDetails,
+    message: message,
   })
     .then((newOrder) => {
       res.status(201).json({ success: true, order: newOrder });
