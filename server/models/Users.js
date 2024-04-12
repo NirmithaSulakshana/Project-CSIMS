@@ -72,6 +72,8 @@ module.exports = (sequelize, DataTypes) => {
 
     Users.belongsToMany(models.Items, {
       through: "UserItems",
+      foreignKey: "UserId",
+      otherKey: "ItemId",
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     });

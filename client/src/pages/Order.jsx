@@ -136,6 +136,20 @@ function Order() {
         console.error("Error placing order rrr:", error);
         showErrorToast("Failed.");
       });
+
+    axios
+      .post("http://localhost:3001/api/userItem/updateUserItems", {
+        customerId: loginCustomerId,
+        orderDetails: orderDetails,
+      })
+      .then((response) => {
+        if (!response.data.success) {
+          showErrorToast("Failed to update UserItem.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error Placing Order", error);
+      });
   };
 
   const handleSearch = (e) => {
