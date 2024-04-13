@@ -13,31 +13,33 @@ import "../../components/styles/adminOrder.css";
 function Order() {
   const [items, setItems] = useState([]);
   const [customers, setCustomers] = useState([]);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [userItems, setUserItems] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      // Fetch items
-      axios
-        .get("http://localhost:3001/api/items/getItems")
-        .then((response) => {
-          setItems(response.data);
-        })
-        .catch((err) => {
-          console.log("Error fetching items", err);
-        });
+      try {
+        // Fetch items
+        const itemsResponse = await axios.get(
+          "http://localhost:3001/api/items/getItems"
+        );
+        setItems(itemsResponse.data);
 
-      // Fetch customers
-      axios
-        .get("http://localhost:3001/api/users/getUsers")
-        .then((response) => {
-          setCustomers(response.data);
-        })
-        .catch((err) => {
-          console.log("Error fetching customers", err);
-        });
+        // Fetch customers
+        const customersResponse = await axios.get(
+          "http://localhost:3001/api/users/getUsers"
+        );
+        setCustomers(customersResponse.data);
+
+        // Fetch user items
+        const userItemsResponse = await axios.get(
+          "http://localhost:3001/api/userItem/getAllUserItems"
+        );
+        setUserItems(userItemsResponse.data.data);
+      } catch (error) {
+        console.log("Error fetching data", error);
+      }
     };
 
     fetchData();
@@ -50,6 +52,13 @@ function Order() {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
+  };
+
+  const getUserItemQuantity = (itemId, userId) => {
+    const userItem = userItems.find(
+      (item) => item.ItemId === itemId && item.UserId === userId
+    );
+    return userItem ? userItem.quantity : 0;
   };
 
   return (
@@ -73,18 +82,18 @@ function Order() {
             <TableBody>
               {items
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((item) => {
-                  return (
-                    <TableRow key={item.id}>
-                      <TableCell className="tableCellHeads">
-                        {item.itemName}
-                      </TableCell>{" "}
-                      {customers.map(() => (
-                        <TableCell key={item.id}>{"..."}</TableCell>
-                      ))}
-                    </TableRow>
-                  );
-                })}
+                .map((item) => (
+                  <TableRow key={item.id}>
+                    <TableCell className="tableCellHeads">
+                      {item.itemName}
+                    </TableCell>
+                    {customers.map((customer) => (
+                      <TableCell key={customer.id}>
+                        {getUserItemQuantity(item.id, customer.id)}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>
