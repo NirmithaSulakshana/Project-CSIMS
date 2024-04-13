@@ -1,42 +1,47 @@
-import React, { useEffect, useState } from 'react';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
-import TableRow from '@mui/material/TableRow';
+import React, { useEffect, useState } from "react";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import TablePagination from "@mui/material/TablePagination";
+import axios from "axios";
+import "../../components/styles/adminOrder.css";
 
-const columns = [
-  { id: 'itemName', label: 'Item Name', minWidth: 170 },
-  { id: 'pradeep', label: 'Pradeep', minWidth: 100 },
-  { id: 'sujan', label: 'Sujan', minWidth: 100 },
-  { id: 'message', label: 'Message', minWidth: 100 },
-];
-
-export default function Orders() {
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [rows, setRows] = useState([]);
+function Order() {
+  const [items, setItems] = useState([]);
+  const [customers, setCustomers] = useState([]);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [userItems, setUserItems] = useState([]);
 
   useEffect(() => {
-    // Fetch data from the backend and update the state
-    fetchDataFromBackend();
-  }, []);
+    const fetchData = async () => {
+      // Fetch items
+      axios
+        .get("http://localhost:3001/api/items/getItems")
+        .then((response) => {
+          setItems(response.data);
+        })
+        .catch((err) => {
+          console.log("Error fetching items", err);
+        });
 
-  const fetchDataFromBackend = async () => {
-    try {
-      // Make a fetch request to your backend API
-      const response = await fetch('your-backend-api-url');
-      const data = await response.json();
-      
-      // Update the rows state with the fetched data
-      setRows(data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
+      // Fetch customers
+      axios
+        .get("http://localhost:3001/api/users/getUsers")
+        .then((response) => {
+          setCustomers(response.data);
+        })
+        .catch((err) => {
+          console.log("Error fetching customers", err);
+        });
+    };
+
+    fetchData();
+  }, []);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -48,54 +53,53 @@ export default function Orders() {
   };
 
   return (
-    <div style={{paddingTop:"35px"}}>
-
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table" >
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align="left"
-                  style={{ minWidth: column.minWidth,backgroundColor: 'lightblue', color: 'black'  }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, index) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <TableCell key={column.id} align="left">
-                          {value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </Paper>
+    <div className="containerDivision">
+      <Paper sx={{ width: "100%", overflow: "hidden" }}>
+        <TableContainer sx={{ maxHeight: 600 }}>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead className="tableHead">
+              <TableRow>
+                <TableCell>Item Name</TableCell>
+                {customers.map((column) => (
+                  <TableCell
+                    key={column.id}
+                    style={{ minWidth: column.minWidth }}
+                  >
+                    {column.firstName}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {items
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((item) => {
+                  return (
+                    <TableRow key={item.id}>
+                      <TableCell className="tableCellHeads">
+                        {item.itemName}
+                      </TableCell>{" "}
+                      {customers.map(() => (
+                        <TableCell key={item.id}>{"..."}</TableCell>
+                      ))}
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={items.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Paper>
     </div>
   );
 }
+
+export default Order;
