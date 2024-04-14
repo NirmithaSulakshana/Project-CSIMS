@@ -14,6 +14,11 @@ import Orders from "./orders";
 import Documents from "./documents";
 import Packing from "./packing";
 import { Menu } from "@mui/icons-material";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
+import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
+import ViewModuleOutlinedIcon from "@mui/icons-material/ViewModuleOutlined";
+import SyncAltOutlinedIcon from "@mui/icons-material/SyncAltOutlined";
 import Footer from "../../components/Footer";
 import SimpleMailBadge from "../../components/SimpleMailBadge";
 
@@ -118,6 +123,7 @@ const AdminPanel = () => {
                   }}
                 >
                   <ListItemText primary="Add New Item" />
+                  <AddCircleOutlineIcon />
                 </Box>
               </ListItem>
               <Divider />
@@ -139,6 +145,7 @@ const AdminPanel = () => {
                   }}
                 >
                   <ListItemText primary="Update Items" />
+                  <SyncAltOutlinedIcon />
                 </Box>
               </ListItem>
               <Divider />
@@ -160,6 +167,7 @@ const AdminPanel = () => {
                   }}
                 >
                   <ListItemText primary="Orders" />
+                  <ViewModuleOutlinedIcon />
                 </Box>
               </ListItem>
               <Divider />
@@ -181,6 +189,7 @@ const AdminPanel = () => {
                   }}
                 >
                   <ListItemText primary="Packing" />
+                  <Inventory2OutlinedIcon />
                 </Box>
               </ListItem>
               <Divider />
@@ -202,6 +211,7 @@ const AdminPanel = () => {
                   }}
                 >
                   <ListItemText primary="Documents" />
+                  <ArticleOutlinedIcon />
                 </Box>
               </ListItem>
               <hr />
