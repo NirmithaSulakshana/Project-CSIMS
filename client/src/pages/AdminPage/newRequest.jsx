@@ -13,9 +13,11 @@ const NewRequest = () => {
   const [newRequests, setNewRequests] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3001/api/users/getPendingUsers").then((response) => {
-      setNewRequests(response.data);
-    });
+    axios
+      .get("http://localhost:3001/api/users/getPendingUsers")
+      .then((response) => {
+        setNewRequests(response.data);
+      });
   }, []);
 
   const timeOptions = {
@@ -30,38 +32,42 @@ const NewRequest = () => {
 
   return (
     <div className="nw_container" style={{ height: "600px" }}>
-      <h2>New Request Section</h2>
       <Box
         sx={{
           width: "90%",
           bgcolor: "background.paper",
           marginLeft: "5%",
+          marginTop: "2%",
           height: "100%",
           overflowY: "auto",
         }}
       >
-        <List>
-          {newRequests.map((request) => (
-            <ListItem key={request.id} disablePadding>
-              <ListItemButton
-                component={Link}
-                to={`/AdminPage/details/${request.id}`}
-              >
-                <ListItemIcon>
-                  <MessageIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primary={`New request from ${request.firstName} ${
-                    request.lastName
-                  } at ${new Date(request.createdAt).toLocaleString(
-                    undefined,
-                    timeOptions
-                  )}`}
-                />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
+        {newRequests.length === 0 ? (
+          <h1>There is no new requests!!</h1>
+        ) : (
+          <List>
+            {newRequests.map((request) => (
+              <ListItem key={request.id} disablePadding>
+                <ListItemButton
+                  component={Link}
+                  to={`/AdminPage/details/${request.id}`}
+                >
+                  <ListItemIcon>
+                    <MessageIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={`New request from ${request.firstName} ${
+                      request.lastName
+                    } at ${new Date(request.createdAt).toLocaleString(
+                      undefined,
+                      timeOptions
+                    )}`}
+                  />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        )}
       </Box>
     </div>
   );

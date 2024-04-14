@@ -50,6 +50,18 @@ userItemRouter.post("/updateUserItems", (req, res) => {
     });
 });
 
+//Get all userItem values
+userItemRouter.get("/getAllUserItems", (req, res) => {
+  UserItems.findAll()
+    .then((userItems) => {
+      res.status(200).json({ success: true, data: userItems });
+    })
+    .catch((error) => {
+      console.error("Error fetching UserItems", error);
+      res.status(500).json({ success: false, error: "Internal server error" });
+    });
+});
+
 //Delete all values in UserItem
 userItemRouter.delete("/deleteAllUserItems", (req, res) => {
   UserItems.destroy({

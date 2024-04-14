@@ -60,6 +60,18 @@ userRouter.get("/getPendingUsers", (req, res) => {
     });
 });
 
+//get approved users
+userRouter.get("/getApprovedUsers", (req, res) => {
+  Users.findAll({ where: { status: "approved" } })
+    .then((approvedUsers) => {
+      res.status(200).json(approvedUsers);
+    })
+    .catch((error) => {
+      console.log("Error retriving approved users", error);
+      res.status(500).json({ message: "Internal server error" });
+    });
+});
+
 //Set Approved users by id
 userRouter.put("/approve/:id", (req, res) => {
   const userId = req.params.id;
