@@ -20,7 +20,11 @@ const AddNewItem = () => {
             <option value="cool">Cool</option>
             <option value="not-cool">Not-Cool</option>
           </select>
-
+          <div class="add-new-item-buttons">
+            <button type="submit">Add </button>
+            <button type="submit">Reset </button>
+            <button type="submit">Cancel </button>
+          </div>
           </form>
         
 
