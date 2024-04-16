@@ -17,7 +17,6 @@
 select {
     width: 100px;
     height: 40px;
-    height: 40px;
 }
 
 input[type="text"] {
@@ -36,6 +35,7 @@ input[type="number"] {
         height: 40px;
 
        }
+
 input[type="text"]:focus {
     
     outline: none; 
