@@ -63,4 +63,8 @@ input[type="number"]:focus {
     width: 65px;
     height: 35px; ;
 }
+
+#add-new-item-form small{
+    color: red;
+}
        
