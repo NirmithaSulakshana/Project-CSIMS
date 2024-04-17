@@ -1,0 +1,70 @@
+
+#add-new-item-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 30px; 
+    
+}
+
+#add-new-item-form input{
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+    border: 1px solid rgb(139, 139, 139);
+}
+
+select {
+    width: 100px;
+    height: 40px;
+}
+
+input[type="text"] {
+    width: 500px;
+    height: 40px;
+   }
+   
+label{
+        margin-top: 10px;
+       display: flex;
+       justify-content: flex-start;
+    }
+    
+input[type="number"] {
+        width: 200px;
+        height: 40px;
+
+       }
+
+input[type="text"]:focus {
+    
+    outline: none; 
+    box-shadow: 0 0 5px 2px greenyellow;
+}
+input[type="number"]:focus {
+    
+    outline: none; 
+    box-shadow: 0 0 5px 2px greenyellow;
+       
+}
+
+.add-new-item-buttons{
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 35px;
+    
+    
+}
+
+.add-new-item-buttons button{
+
+    background-color: #00D16B;
+    width: 65px;
+    height: 35px; ;
+}
+
+#add-new-item-form small{
+    color: red;
+}
+       
