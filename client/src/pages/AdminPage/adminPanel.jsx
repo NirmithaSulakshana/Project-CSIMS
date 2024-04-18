@@ -227,6 +227,7 @@ const AdminPanel = () => {
             marginTop: "0%",
             backgroundColor: "#C7E0CC",
             border: "0px solid #000000",
+            boxSizing: "border-box",
           }}
         >
           {renderSection()}

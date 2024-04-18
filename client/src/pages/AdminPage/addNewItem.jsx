@@ -23,13 +23,14 @@ const AddNewItem = () => {
     reacted: "false",
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = (data, { resetForm }) => {
     //this is the place we want to call the api request and submit the data on to the data base
     axios
       .post("http://localhost:3001/api/items/addItem", data)
       .then((response) => {
         console.log("Add a new Item");
       });
+    resetForm();
   };
 
   //this is an object containg each one of the fields that we need in our form
@@ -131,7 +132,7 @@ const AddNewItem = () => {
               autocomplete="off"
               id="inputAddItem"
               name="barcodeNumber"
-              placeholder="name"
+              placeholder="No:#"
             />
             <label className="addLabel">Behaviours: </label>
             {/* -------------------------Cooled check------------------------------ */}
@@ -183,7 +184,7 @@ const AddNewItem = () => {
               />
             </div>
             {/* -----------------------------Btns------------------------------ */}
-            <Button variant="success" size="lg">
+            <Button type="reset" variant="success" size="lg">
               Reset
             </Button>{" "}
             <Button type="submit" variant="success" size="lg">
