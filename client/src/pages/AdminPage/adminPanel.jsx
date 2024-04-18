@@ -222,7 +222,7 @@ const AdminPanel = () => {
         <div
           style={{
             flex: showList ? 1 : 2,
-            paddingBottom: "50%",
+            //paddingBottom: "50%",
             //height:"85%",
             marginTop: "0%",
             backgroundColor: "#C7E0CC",
