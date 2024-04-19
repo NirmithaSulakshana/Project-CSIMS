@@ -13,7 +13,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 500px;
+  width: 800px;
   height: auto;
   padding: 20px;
   border: 5px solid rgb(69, 114, 89);
@@ -56,7 +56,7 @@
   margin-top: 15px;
   height: 40px;
   border: none;
-  background-color: rgb(135, 250, 166);
+  background-color: rgb(54, 166, 210);
   border-radius: 5px;
   color: rgb(0, 0, 0);
 }
