@@ -13,6 +13,7 @@ import { AuthContext } from "./helpers/AuthContext";
 import { useEffect, useState } from "react";
 import AdminPanel from "./pages/AdminPage/adminPanel";
 import SalesManagerPanel from "./pages/SalesManagerPage/SalesManagerPanel";
+import CurrentOrder from "./pages/AdminPage/currentOrder";
 
 function App() {
   const [authState, setauthState] = useState(false);
@@ -43,6 +44,7 @@ function App() {
               element={<SalesManagerOrders />}
             />
             <Route path="/AdminPage/details/:id" element={<FullDetails />} />
+            <Route path="/AdminPage/CurrentOrder" element={<CurrentOrder />} />
           </Routes>
         </BrowserRouter>
       </AuthContext.Provider>
