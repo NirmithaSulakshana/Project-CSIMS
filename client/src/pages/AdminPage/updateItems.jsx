@@ -15,7 +15,6 @@ import {
   showErrorToast,
   showSuccessToast,
 } from "../../components/ToasterMessage.jsx";
-import "../../components/styles/addNewItem.css";
 
 const UpdateItems = () => {
   // State variables to store form data
@@ -70,7 +69,7 @@ const UpdateItems = () => {
       showErrorToast("Error updating item");
     }
 
-    console.log(formData);
+    //console.log(formData);
   };
 
   return (
