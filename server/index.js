@@ -34,6 +34,10 @@ app.use("/api/admin", adminRoutes);
 const userItemRoutes = require("./routes/userItem");
 app.use("/api/userItem", userItemRoutes);
 
+//previous Order Router
+const previousOrderRoutes = require("./routes/previousOrder");
+app.use("/api/previousOrder", previousOrderRoutes);
+
 db.sequelize.sync().then(() => {
   app.listen(process.env.PORT, () => {
     console.log("Server running on port: ", process.env.PORT);

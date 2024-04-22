@@ -13,3 +13,14 @@
   width: 10vw;
   min-width: 5vw;
 }
+
+.sfpButton {
+  padding-top: 5%;
+  padding-bottom: 3%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.css-y8ay40-MuiTableCell-root {
+  background-color: yellow !important;
+}
