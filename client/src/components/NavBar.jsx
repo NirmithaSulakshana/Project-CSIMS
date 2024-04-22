@@ -46,29 +46,19 @@ function NavBar() {
             <Nav.Link href="/AboutUs">About Us</Nav.Link>
             {!localStorage.getItem("accessToken") && (
               <>
-                <Nav.Link href="#">Log In</Nav.Link>
+                
               </>
             )}
-            <NavDropdown title="Link" id="navbarScrollingDropdown">
-              <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action4">
-                Another action
+            <NavDropdown title="Login" id="navbarScrollingDropdown">
+              <NavDropdown.Item href="/LogIn">User Login</NavDropdown.Item>
+              <NavDropdown.Item href="/AdminLoginForm">
+                Admin Login
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action5">
-                Something else here
-              </NavDropdown.Item>
+              
             </NavDropdown>
           </Nav>
-          <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-            />
-            <Button variant="outline-success">Search</Button>
-          </Form>
+          
         </Navbar.Collapse>
       </Container>
     </Navbar>
