@@ -133,7 +133,7 @@ function Order() {
         }
       })
       .catch((error) => {
-        console.error("Error placing order rrr:", error);
+        console.error("Error placing order:", error);
         showErrorToast("Failed.");
       });
 

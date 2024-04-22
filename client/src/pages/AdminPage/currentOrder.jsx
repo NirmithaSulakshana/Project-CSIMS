@@ -51,6 +51,29 @@ function CurrentOrder() {
     fetchData();
   }, []);
 
+  const handleSendToPacking = () => {
+    const previousOrderDetails = userItems.map((item) => ({
+      UserId: item.UserId,
+      ItemId: item.ItemId,
+      quantity: item.quantity,
+    }));
+
+    axios
+      .post("http://localhost:3001/api/previousOrder/placePreviousOrder", {
+        previousOrderDetails: previousOrderDetails,
+      })
+      .then((response) => {
+        if (response.data.success) {
+          console.log("success previous");
+        } else {
+          console.log("error previous");
+        }
+      })
+      .catch((error) => {
+        console.error("Error placing previous order:", error);
+      });
+  };
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -153,7 +176,9 @@ function CurrentOrder() {
       </Paper>
       <div className="sfpButton">
         <Stack spacing={2} direction="row">
-          <Button variant="outlined">Send to Packing</Button>
+          <Button variant="outlined" onClick={handleSendToPacking}>
+            Send to Packing
+          </Button>
           <Button
             variant="outlined"
             onClick={() => {
