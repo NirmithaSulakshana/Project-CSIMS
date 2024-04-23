@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Alert, Calendar } from "antd";
 import dayjs from "dayjs";
 import FlightIcon from "@mui/icons-material/Flight";
+import axios from "axios";
 import "../../components/styles/orderCalender.css";
 import Footer from "../../components/Footer";
-import axios from "axios";
 
 function OrderCalender() {
   const [value, setValue] = useState(dayjs());
@@ -15,17 +15,21 @@ function OrderCalender() {
     const fetchPreviousOrderDates = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3001/api/previousOrder/getPreviousOrders"
+          "http://localhost:3001/api/previousOrder/getPreviousOrdersUpdatedAt"
         );
 
-        // Check if response.data is an array
-        if (Array.isArray(response.data)) {
-          const dates = response.data.map((order) =>
-            dayjs(order.updatedAt).format("YYYY-MM-DD")
+        if (response.data.success) {
+          // Extract updatedAt dates from the response data
+          const updatedAtDates = response.data.data.map(
+            (updatedAtDate) => updatedAtDate.updatedAtDate
           );
-          setPreviousOrderDates(dates);
+
+          setPreviousOrderDates(updatedAtDates);
         } else {
-          console.error("API response is not an array:", response.data);
+          console.error(
+            "Failed to fetch previous order dates:",
+            response.data.error
+          );
         }
       } catch (error) {
         console.error("Error fetching previous order dates:", error);
@@ -50,33 +54,24 @@ function OrderCalender() {
   // Custom date cell render function
   const dateCellRender = (date) => {
     const dateString = date.format("YYYY-MM-DD");
-    let content = null;
 
-    console.log("is array ", Array.isArray(previousOrderDates));
-    console.log(previousOrderDates.length > 0);
-    console.log(previousOrderDates);
+    // Check if the date is in the previous order dates
+    const isPreviousOrderDate = previousOrderDates.includes(dateString);
 
-    // Check if previousOrderDates is defined and not empty
-    if (Array.isArray(previousOrderDates) && previousOrderDates.length > 0) {
-      // Check if the date is in the previous order dates
-      if (previousOrderDates.includes(dateString)) {
-        content = (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              height: "100%",
-              color: "green",
-            }}
-          >
-            <FlightIcon />
-          </div>
-        );
-      }
-    }
-
-    return content;
+    // Render flight icon if it's a previous order date
+    return isPreviousOrderDate ? (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100%",
+          color: "green",
+        }}
+      >
+        <FlightIcon />
+      </div>
+    ) : null;
   };
 
   return (
@@ -87,7 +82,7 @@ function OrderCalender() {
             message={`${selectedValue?.format("YYYY-MM-DD")} (${dayOfWeek})`}
           />
         </div>
-        <div className="contentCalender ">
+        <div className="contentCalender">
           <Calendar
             value={value}
             onSelect={onSelect}

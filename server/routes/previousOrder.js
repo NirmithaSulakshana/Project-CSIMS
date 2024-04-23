@@ -1,5 +1,6 @@
 const express = require("express");
 const previousOrderRouter = express.Router();
+const { sequelize } = require("../models");
 
 const { PreviousOrder } = require("../models");
 
@@ -30,6 +31,22 @@ previousOrderRouter.get("/getPreviousOrders", (req, res) => {
     })
     .catch((error) => {
       console.error("Error fetching previous order details", error);
+      res.status(500).json({ success: false, error: "Internal server error" });
+    });
+});
+
+// Get updatedAt date of all previous orders
+previousOrderRouter.get("/getPreviousOrdersUpdatedAt", (req, res) => {
+  PreviousOrder.findAll({
+    attributes: [
+      [sequelize.fn("date", sequelize.col("updatedAt")), "updatedAtDate"],
+    ],
+  })
+    .then((updatedAtDates) => {
+      res.status(200).json({ success: true, data: updatedAtDates });
+    })
+    .catch((error) => {
+      console.error("Error fetching updatedAt dates of previous orders", error);
       res.status(500).json({ success: false, error: "Internal server error" });
     });
 });
