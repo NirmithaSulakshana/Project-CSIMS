@@ -2,7 +2,7 @@ const express = require("express");
 const adminRouter = express.Router();
 const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
-const { Op } = require("sequelize");
+const { Op, where } = require("sequelize");
 
 const { Admins } = require("../models");
 
@@ -93,6 +93,41 @@ adminRouter.post("/register", async (req, res) => {
   } catch (err) {
     console.error("Error creating admin account", err);
     res.status(500).json({ message: "Internal servrer error" });
+  }
+});
+
+//Admin login
+adminRouter.post("/login", async (req, res) => {
+  try {
+    const { email, password, userType } = req.body;
+    const admin = await Admins.findOne({ where: { email: email } });
+
+    if (!admin) {
+      return res.status(404).json({ message: "Invalid email or password" });
+    }
+
+    const hashedPassword = hashPassword(password);
+
+    if (
+      hashedPassword !== admin.password ||
+      admin.isAdmin !== (userType === "admin")
+    ) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+
+    const accessToken = jwt.sign(
+      {
+        adminId: admin.id,
+        email: admin.email,
+      },
+      "importantsecret",
+      { expiresIn: "1h" }
+    );
+    // Send the token to the client
+    res.status(200).json({ accessToken });
+  } catch (error) {
+    console.error("Error during login", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 
