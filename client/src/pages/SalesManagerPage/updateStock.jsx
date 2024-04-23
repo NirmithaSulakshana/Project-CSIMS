@@ -1,16 +1,24 @@
 import React, { useState } from "react";
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import { AttachMoney, Exposure, Person, Search,} from "@mui/icons-material";
-import { useNavigate } from 'react-router-dom';
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import { AttachMoney, Exposure, Person, Search } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import {
+  showErrorToast,
+  showSuccessToast,
+} from "../../components/ToasterMessage.jsx";
 
 const UpdateStock = () => {
   const Navigate = useNavigate();
   const [formData, setFormData] = useState({
-    supplierName: '',
-    itemName: '',
-    quantity: '',
-    price: '',
+    barcodeNumber: "",
+    itemName: "",
+    quantity: "",
+    supplierPrice: "",
   });
 
   const handleChange = (e) => {
@@ -21,168 +29,187 @@ const UpdateStock = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
     // Submit form data to your backend here
+    try {
+      // Make API request to update item based on barcode number
+      const response = await axios.patch(
+        `http://localhost:3001/api/items/updateItemStock/${formData.barcodeNumber}`,
+        formData
+      );
+      // Check if the request was successful
+      if (response.status === 200) {
+        // Show success message
+        showSuccessToast("Item updated successfully");
+        // Clear form data
+        setFormData({
+          barcodeNumber: "",
+          itemName: "",
+          quantity: "",
+          supplierPrice: "",
+        });
+      } else {
+        // Show error message
+        showErrorToast("Failed to update item");
+      }
+    } catch (error) {
+      // Handle any errors
+      showErrorToast("Error updating item");
+    }
+    console.log(formData);
   };
 
   return (
     <div>
       {/* Content for New Request section */}
-      <br/>
+      <br />
       <h2>Update Stock Section</h2>
-      <br/>
+      <br />
       <div className="form">
-          <form onSubmit={handleSubmit}>
-            <div>
-                <label style={{paddingRight : "69%", marginBottom : "10px"}}>Supplier Name</label>
-                <br/>
-                <TextField
-                  name="supplierName"
-                  type = "text"
-                  value={formData.supplierName}
-                  onChange={handleChange}
-                  placeholder="Supplier Name"
-                  inputProps={{
-                    style : 
-                    { width: '700px', 
-                      borderRadius: "9px", 
-                      backgroundColor : "white",
-                      height : "10px",
-                      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.5)'
-                    },
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label style={{ paddingRight: "69%", marginBottom: "10px" }}>
+              Barcode Number
+            </label>
+            <br />
+            <TextField
+              name="barcodeNumber"
+              type="text"
+              value={formData.barcodeNumber}
+              onChange={handleChange}
+              placeholder="Barcode"
+              inputProps={{
+                style: {
+                  width: "700px",
+                  borderRadius: "9px",
+                  backgroundColor: "white",
+                  height: "10px",
+                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.5)",
+                },
+              }}
+            />
+            <Person style={{ marginLeft: "100px", marginTop: "10px" }} />
+          </div>
+          <br />
+          <div>
+            <label style={{ paddingRight: "71%", marginBottom: "10px" }}>
+              Item Name
+            </label>
+            <br />
 
-                  }}
-                  
-                  
-                />
-                <Person style = {{marginLeft : "100px", marginTop : "10px"}} />
-  
-            </div>
-            <br/>
-            <div>
-            <label style={{paddingRight : "71%", marginBottom : "10px"}}>Item Name</label>
-            <br/>
-            
             <TextField
               name="itemName"
-              type = "text"
+              type="text"
               value={formData.itemName}
               onChange={handleChange}
               placeholder="Search"
               inputProps={{
-                style : 
-                { width: '700px', 
-                  borderRadius: "9px", 
-                  backgroundColor : "white",
-                  height : "10px",
-                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.5)'
+                style: {
+                  width: "700px",
+                  borderRadius: "9px",
+                  backgroundColor: "white",
+                  height: "10px",
+                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.5)",
                 },
-
               }}
-              
-              
             />
-            <Search style = {{marginLeft : "100px", marginTop : "10px"}} />
-            </div>
-            <br/>
-            <div>
-            <label style={{paddingRight : "73%", marginBottom : "10px"}}>Quantity</label>
-            <br/>
-           
+            <Search style={{ marginLeft: "100px", marginTop: "10px" }} />
+          </div>
+          <br />
+          <div>
+            <label style={{ paddingRight: "73%", marginBottom: "10px" }}>
+              Quantity
+            </label>
+            <br />
+
             <TextField
-              
               name="quantity"
-              type = "number"
+              type="number"
               value={formData.quantity}
               onChange={handleChange}
               placeholder="KG"
               inputProps={{
-                style : 
-                { width: '700px', 
-                  borderRadius: "9px", 
-                  backgroundColor : "white",
-                  height : "10px",
-                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.5)'
+                style: {
+                  width: "700px",
+                  borderRadius: "9px",
+                  backgroundColor: "white",
+                  height: "10px",
+                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.5)",
                 },
-                min: 0, 
-                
-
+                min: 0,
               }}
-              
             />
-            <Exposure style = {{marginLeft : "100px", marginTop : "10px"}} />
-            </div>
-            <div>
-          
-            <br/>
-            <label style={{paddingRight : "75%", marginBottom : "10px"}}>Price</label>
-            <br/>
-            
+            <Exposure style={{ marginLeft: "100px", marginTop: "10px" }} />
+          </div>
+          <div>
+            <br />
+            <label style={{ paddingRight: "75%", marginBottom: "10px" }}>
+              Supplier Price
+            </label>
+            <br />
+
             <TextField
-              name="price"
-              type = "number"
-              value={formData.price}
+              name="supplierPrice"
+              type="number"
+              value={formData.supplierPrice}
               onChange={handleChange}
               placeholder="Price"
               inputProps={{
-                style : 
-                { width: '700px', 
-                  borderRadius: "9px", 
-                  backgroundColor : "white",
-                  height : "10px",
-                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.5)'
+                style: {
+                  width: "700px",
+                  borderRadius: "9px",
+                  backgroundColor: "white",
+                  height: "10px",
+                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.5)",
                 },
-                min: 0, 
-                
-
+                min: 0,
               }}
-              
             />
-            <AttachMoney style = {{marginLeft : "100px", marginTop : "12px"}}/>
-            </div>
-            <br/>
-            <div style = {{marginTop: "80px", marginRight : "160px"}}>
-            <Button 
+            <AttachMoney style={{ marginLeft: "100px", marginTop: "12px" }} />
+          </div>
+          <br />
+          <div style={{ marginTop: "80px", marginRight: "160px" }}>
+            <Button
               onClick={() => Navigate("/SalesManagerOrders")}
-              
-               variant="contained"
-               color="secondary" 
-               style={{
-                   textTransform: 'none',
-                   backgroundColor: 'green', 
-                   color: 'white', 
-                   fontSize: "17px",
-                   marginRight : "40px",
-                   width : "150px"
-               }}
-                   sx={{
-               
-                   borderRadius: '9px', 
-                   }}>{" "}
-                  Orders
+              variant="contained"
+              color="secondary"
+              style={{
+                textTransform: "none",
+                backgroundColor: "green",
+                color: "white",
+                fontSize: "17px",
+                marginRight: "40px",
+                width: "150px",
+              }}
+              sx={{
+                borderRadius: "9px",
+              }}
+            >
+              {" "}
+              Orders
             </Button>
-            <Button  
-                        type="submit"
-                        variant="contained"
-                        color="secondary" 
-                        style={{
-                            textTransform: 'none',
-                            backgroundColor: 'red', 
-                            color: 'white', 
-                            fontSize: "17px",
-                            width : "150px"
-                        }}
-                            sx={{
-                        
-                            borderRadius: '9px', 
-                            }}>
-                        Update
+            <Button
+              type="submit"
+              variant="contained"
+              color="secondary"
+              style={{
+                textTransform: "none",
+                backgroundColor: "red",
+                color: "white",
+                fontSize: "17px",
+                width: "150px",
+              }}
+              sx={{
+                borderRadius: "9px",
+              }}
+            >
+              Update
             </Button>
-            </div>
-          </form>
+          </div>
+        </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };

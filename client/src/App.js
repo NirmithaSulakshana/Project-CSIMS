@@ -13,8 +13,13 @@ import { AuthContext } from "./helpers/AuthContext";
 import { useEffect, useState } from "react";
 import AdminPanel from "./pages/AdminPage/adminPanel";
 import SalesManagerPanel from "./pages/SalesManagerPage/SalesManagerPanel";
+
 import LogIn from "./pages/LogIn";
 import AdminLoginForm from "./components/AdminLoginForm";
+
+import CurrentOrder from "./pages/AdminPage/currentOrder";
+import OrderCalender from "./pages/AdminPage/orderCalender";
+
 
 function App() {
   const [authState, setauthState] = useState(false);
@@ -47,6 +52,11 @@ function App() {
               element={<SalesManagerOrders />}
             />
             <Route path="/AdminPage/details/:id" element={<FullDetails />} />
+            <Route path="/AdminPage/CurrentOrder" element={<CurrentOrder />} />
+            <Route
+              path="/AdminPage/OrderCalender"
+              element={<OrderCalender />}
+            />
           </Routes>
         </BrowserRouter>
       </AuthContext.Provider>

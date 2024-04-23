@@ -94,11 +94,10 @@ const AdminSignupC = () => {
     }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (!userType) {
-      // Set an error message or handle it as needed
       console.error("Please select a user type");
       return;
     }
@@ -111,8 +110,43 @@ const AdminSignupC = () => {
       return;
     }
 
-    // Handle form submission based on user type (customer or admin)
-    console.log("Form submitted:", userType, formData);
+    try {
+      const response = await fetch("http://localhost:3001/api/admin/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          userType: userType,
+          admincode: formData.admincode || null,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+
+      // Reset form fields after successful submission
+      setFormData({
+        firstname: "",
+        lastname: "",
+        username: "",
+        password: "",
+        confirmpassword: "",
+        nic: "",
+        email: "",
+        mobileno: "",
+        admincode: "",
+      });
+
+      // Optionally, you can provide feedback to the user about successful registration
+      console.log("Admin account created successfully");
+    } catch (error) {
+      console.error("Error creating admin account", error);
+      // Handle error (e.g., display error message to the user)
+    }
   };
 
   return (

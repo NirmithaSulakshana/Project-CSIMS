@@ -162,4 +162,36 @@ itemRouter.patch("/updateItem/:barcodeNumber", (req, res) => {
     });
 });
 
+// Update item stock based on barcode number
+itemRouter.patch("/updateItemStock/:barcodeNumber", (req, res) => {
+  const barcodeNumber = req.params.barcodeNumber;
+  const { itemName, quantity, supplierPrice } = req.body;
+
+  // Check if an item with the specified barcodeNumber exists
+  Items.findOne({ where: { barcodeNumber } })
+    .then((item) => {
+      if (!item) {
+        // If no item is found, show an error
+        return res.status(404).json({ message: "Item not found" });
+      }
+
+      // Update the item's values
+      return item.update({
+        quantity,
+        supplierPrice,
+      });
+    })
+    .then((updatedItem) => {
+      // Send the updated item as a response
+      res
+        .status(200)
+        .json({ message: "Item updated successfully", item: updatedItem });
+    })
+    .catch((error) => {
+      // Handle errors
+      console.error("Error updating item:", error);
+      res.status(500).json({ message: "Internal server error" });
+    });
+});
+
 module.exports = itemRouter;

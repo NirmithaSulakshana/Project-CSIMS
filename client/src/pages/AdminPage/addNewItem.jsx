@@ -5,8 +5,13 @@ import Button from "react-bootstrap/Button";
 import * as Yup from "yup";
 //this is for creating forms and validation
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-
+import {
+  showErrorToast,
+  showSuccessToast,
+} from "../../components/ToasterMessage.jsx";
 import "../../components/styles/addNewItem.css";
 
 const AddNewItem = () => {
@@ -28,7 +33,12 @@ const AddNewItem = () => {
     axios
       .post("http://localhost:3001/api/items/addItem", data)
       .then((response) => {
-        console.log("Add a new Item");
+        if (response.status >= 200 && response.status < 300) {
+          showSuccessToast("Add a New item");
+        } else {
+          showErrorToast("Failed to add the item.");
+        }
+        console.log(response.status);
       });
     resetForm();
   };
@@ -69,7 +79,7 @@ const AddNewItem = () => {
               className="error-message"
             />
             <Field
-              autocomplete="off"
+              autoComplete="off"
               id="inputAddItem"
               name="itemName"
               placeholder="Enter Item name"
@@ -81,7 +91,7 @@ const AddNewItem = () => {
               className="error-message"
             />
             <Field
-              autocomplete="off"
+              autoComplete="off"
               id="inputAddItem"
               name="unitPrice"
               placeholder="Price"
@@ -93,7 +103,7 @@ const AddNewItem = () => {
               className="error-message"
             />
             <Field
-              autocomplete="off"
+              autoComplete="off"
               id="inputAddItem"
               name="quantity"
               placeholder="KG"
@@ -105,7 +115,7 @@ const AddNewItem = () => {
               className="error-message"
             />
             <Field
-              autocomplete="off"
+              autoComplete="off"
               id="inputAddItem"
               name="supplierPrice"
               placeholder="Price"
@@ -117,7 +127,7 @@ const AddNewItem = () => {
               className="error-message"
             />
             <Field
-              autocomplete="off"
+              autoComplete="off"
               id="inputAddItem"
               name="botnicalName"
               placeholder="name"
@@ -129,7 +139,7 @@ const AddNewItem = () => {
               className="error-message"
             />
             <Field
-              autocomplete="off"
+              autoComplete="off"
               id="inputAddItem"
               name="barcodeNumber"
               placeholder="No:#"
@@ -193,6 +203,7 @@ const AddNewItem = () => {
           </Form>
         </Formik>
       </div>
+      <ToastContainer />
     </>
   );
 };
