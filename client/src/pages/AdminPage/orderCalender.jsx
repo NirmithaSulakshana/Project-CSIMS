@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Alert, Calendar } from "antd";
+import { Alert, Calendar, Button } from "antd";
 import dayjs from "dayjs";
 import FlightIcon from "@mui/icons-material/Flight";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; // Import useHistory
 import "../../components/styles/orderCalender.css";
 import Footer from "../../components/Footer";
 
@@ -10,6 +11,8 @@ function OrderCalender() {
   const [value, setValue] = useState(dayjs());
   const [selectedValue, setSelectedValue] = useState(dayjs());
   const [previousOrderDates, setPreviousOrderDates] = useState([]);
+  const [showButton, setShowButton] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPreviousOrderDates = async () => {
@@ -19,7 +22,6 @@ function OrderCalender() {
         );
 
         if (response.data.success) {
-          // Extract updatedAt dates from the response data
           const updatedAtDates = response.data.data.map(
             (updatedAtDate) => updatedAtDate.updatedAtDate
           );
@@ -42,23 +44,26 @@ function OrderCalender() {
   const onSelect = (newValue) => {
     setValue(newValue);
     setSelectedValue(newValue);
+
+    const dateString = newValue.format("YYYY-MM-DD");
+    const isPreviousOrderDate = previousOrderDates.includes(dateString);
+    setShowButton(isPreviousOrderDate);
   };
 
   const onPanelChange = (newValue) => {
     setValue(newValue);
   };
 
-  // Get the day of the week of the selected date
+  const handleButtonClick = () => {
+    navigate("/AdminPage/PreviousOrder");
+  };
+
   const dayOfWeek = selectedValue.format("dddd");
 
-  // Custom date cell render function
   const dateCellRender = (date) => {
     const dateString = date.format("YYYY-MM-DD");
-
-    // Check if the date is in the previous order dates
     const isPreviousOrderDate = previousOrderDates.includes(dateString);
 
-    // Render flight icon if it's a previous order date
     return isPreviousOrderDate ? (
       <div
         style={{
@@ -90,6 +95,13 @@ function OrderCalender() {
             cellRender={dateCellRender}
           />
         </div>
+        {showButton && (
+          <div className="buttonContainer">
+            <Button type="primary" onClick={handleButtonClick}>
+              View Order Details
+            </Button>
+          </div>
+        )}
       </div>
       <div>
         <Footer />

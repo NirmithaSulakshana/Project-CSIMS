@@ -13,7 +13,7 @@ import { AuthContext } from "./helpers/AuthContext";
 import { useEffect, useState } from "react";
 import AdminPanel from "./pages/AdminPage/adminPanel";
 import SalesManagerPanel from "./pages/SalesManagerPage/SalesManagerPanel";
-
+import PreviousOrder from "./pages/AdminPage/previousOrder";
 import LogIn from "./pages/LogIn";
 import AdminLoginForm from "./components/AdminLoginForm";
 
@@ -52,6 +52,10 @@ function App() {
             <Route
               path="/AdminPage/OrderCalender"
               element={<OrderCalender />}
+            />
+            <Route
+              path="/AdminPage/PreviousOrder"
+              element={<PreviousOrder />}
             />
           </Routes>
         </BrowserRouter>
