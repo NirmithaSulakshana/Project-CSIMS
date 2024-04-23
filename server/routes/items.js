@@ -165,7 +165,7 @@ itemRouter.patch("/updateItem/:barcodeNumber", (req, res) => {
 // Update item stock based on barcode number
 itemRouter.patch("/updateItemStock/:barcodeNumber", (req, res) => {
   const barcodeNumber = req.params.barcodeNumber;
-  const { itemName, quantity, supplierPrice } = req.body;
+  const { itemName, quantity: newQuantity, supplierPrice } = req.body;
 
   // Check if an item with the specified barcodeNumber exists
   Items.findOne({ where: { barcodeNumber } })
@@ -175,9 +175,13 @@ itemRouter.patch("/updateItemStock/:barcodeNumber", (req, res) => {
         return res.status(404).json({ message: "Item not found" });
       }
 
+      // Calculate the new quantity by adding the new quantity to the existing quantity
+      const existingQuantity = item.quantity || 0;
+      const updatedQuantity = existingQuantity + newQuantity;
+
       // Update the item's values
       return item.update({
-        quantity,
+        quantity: updatedQuantity,
         supplierPrice,
       });
     })

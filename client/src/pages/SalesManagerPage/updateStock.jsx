@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { AttachMoney, Exposure, Person, Search } from "@mui/icons-material";
@@ -11,6 +11,7 @@ import {
   showErrorToast,
   showSuccessToast,
 } from "../../components/ToasterMessage.jsx";
+import { Item } from "rc-menu";
 
 const UpdateStock = () => {
   const Navigate = useNavigate();
@@ -21,6 +22,25 @@ const UpdateStock = () => {
     supplierPrice: "",
   });
 
+  const [items, setItems] = useState([]);
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  useEffect(() => {
+    // Fetch all items from the backend when the component mounts
+    const fetchItems = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3001/api/items/getItems"
+        );
+        setItems(response.data);
+      } catch (error) {
+        console.error("Error fetching items:", error);
+      }
+    };
+
+    fetchItems();
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -29,14 +49,27 @@ const UpdateStock = () => {
     }));
   };
 
+  const handleItemSelect = (item) => {
+    setSelectedItem(item);
+    setFormData({
+      barcodeNumber: item.barcodeNumber,
+      itemName: item.itemName,
+      quantity: item.quantity.toString(), // Convert quantity to string for TextField input
+      supplierPrice: item.supplierPrice.toString(), // Convert supplierPrice to string for TextField input
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Submit form data to your backend here
     try {
+      // Convert quantity and supplier price to numbers
+      const quantity = parseFloat(formData.quantity);
+      const supplierPrice = parseFloat(formData.supplierPrice);
       // Make API request to update item based on barcode number
       const response = await axios.patch(
         `http://localhost:3001/api/items/updateItemStock/${formData.barcodeNumber}`,
-        formData
+        { quantity, supplierPrice }
       );
       // Check if the request was successful
       if (response.status === 200) {
@@ -58,6 +91,7 @@ const UpdateStock = () => {
       showErrorToast("Error updating item");
     }
     console.log(formData);
+    console.log(selectedItem);
   };
 
   return (
@@ -73,23 +107,30 @@ const UpdateStock = () => {
               Barcode Number
             </label>
             <br />
-            <TextField
+            <select
               name="barcodeNumber"
-              type="text"
               value={formData.barcodeNumber}
               onChange={handleChange}
-              placeholder="Barcode"
-              inputProps={{
-                style: {
-                  width: "700px",
-                  borderRadius: "9px",
-                  backgroundColor: "white",
-                  height: "10px",
-                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.5)",
-                },
+              style={{
+                width: "700px",
+                borderRadius: "9px",
+                backgroundColor: "white",
+                height: "30px",
+                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.5)",
               }}
-            />
-            <Person style={{ marginLeft: "100px", marginTop: "10px" }} />
+            >
+              <option value="">Select an item</option>
+              {items.map((item) => (
+                <option
+                  key={item.barcodeNumber}
+                  value={item.barcodeNumber}
+                  onClick={() => handleItemSelect(item)}
+                >
+                  {`${item.barcodeNumber}: ${item.itemName}`}
+                </option>
+              ))}
+            </select>
+            <Search style={{ marginLeft: "100px", marginTop: "10px" }} />
           </div>
           <br />
           <div>
@@ -103,7 +144,7 @@ const UpdateStock = () => {
               type="text"
               value={formData.itemName}
               onChange={handleChange}
-              placeholder="Search"
+              placeholder="Name"
               inputProps={{
                 style: {
                   width: "700px",
@@ -114,7 +155,7 @@ const UpdateStock = () => {
                 },
               }}
             />
-            <Search style={{ marginLeft: "100px", marginTop: "10px" }} />
+            <Person style={{ marginLeft: "100px", marginTop: "10px" }} />
           </div>
           <br />
           <div>
