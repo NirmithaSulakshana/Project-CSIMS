@@ -3,7 +3,7 @@ import { Alert, Calendar, Button } from "antd";
 import dayjs from "dayjs";
 import FlightIcon from "@mui/icons-material/Flight";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Import useHistory
+import { useNavigate } from "react-router-dom";
 import "../../components/styles/orderCalender.css";
 import Footer from "../../components/Footer";
 
@@ -54,8 +54,29 @@ function OrderCalender() {
     setValue(newValue);
   };
 
-  const handleButtonClick = () => {
-    navigate("/AdminPage/PreviousOrder");
+  const handleButtonClick = async () => {
+    // Filter previous order IDs based on the selected date
+    const dateString = selectedValue.format("YYYY-MM-DD");
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/api/previousOrder/getPreviousOrders?date=${dateString}`
+      );
+      if (response.data.success) {
+        // Assuming the response contains the previous order IDs
+        const orderIds = response.data.data.map((order) => order.id);
+        // Store the first order ID (assuming there's only one order for a specific date)
+        localStorage.setItem("previousOrderId", orderIds[0]);
+        // Navigate to the Previous Order page
+        navigate("/AdminPage/PreviousOrder");
+      } else {
+        console.error(
+          "Failed to fetch previous order IDs for the selected date:",
+          response.data.error
+        );
+      }
+    } catch (error) {
+      console.error("Error fetching previous order IDs:", error);
+    }
   };
 
   const dayOfWeek = selectedValue.format("dddd");
