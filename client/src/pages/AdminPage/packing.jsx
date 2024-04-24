@@ -14,7 +14,6 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import axios from "axios";
 import "../../components/styles/adminOrder.css";
-import Footer from "../../components/Footer";
 
 const Packing = () => {
   const [items, setItems] = useState([]);
@@ -68,6 +67,10 @@ const Packing = () => {
     return userItem ? userItem.quantity : 0;
   };
 
+  const checkItemProperty = (item) => {};
+
+  const handleSinglePacking = () => {};
+
   return (
     <>
       <div>
@@ -91,6 +94,9 @@ const Packing = () => {
                   ))}
                   <TableCell>Total</TableCell>
                   <TableCell>Status for Paccking</TableCell>
+                  {/*Inside the TableHead component, add a new TableCell for
+                  checkboxes */}
+                  <TableCell>Single Item Packing</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -141,6 +147,18 @@ const Packing = () => {
                                 acc + getUserItemQuantity(item.id, customer.id),
                               0
                             ) - item.quantity}
+                      </TableCell>
+                      {/*Inside the TableBody component, for each row, add a new TableCell with a checkbox */}
+                      <TableCell>
+                        <input
+                          type="checkbox"
+                          // Logic to handle checkbox value
+                          /* Logic to determine if this item should be packed as a single item */
+                          checked={handleSinglePacking()}
+                          onChange={(e) => {
+                            // Logic to handle checkbox change
+                          }}
+                        />
                       </TableCell>
                     </TableRow>
                   ))}
