@@ -65,6 +65,7 @@ function CurrentOrder() {
       .then((response) => {
         if (response.data.success) {
           console.log("success previous");
+          navigate(-1);
         } else {
           console.log("error previous");
         }
