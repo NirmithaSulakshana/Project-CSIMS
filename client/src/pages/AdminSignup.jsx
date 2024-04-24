@@ -148,6 +148,7 @@ const AdminSignupC = () => {
       // Handle error (e.g., display error message to the user)
     }
   };
+  
 
   return (
     <div className="container1">
