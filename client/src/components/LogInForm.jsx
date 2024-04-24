@@ -9,11 +9,33 @@ import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { showSuccessToast, showErrorToast } from "./ToasterMessage";
+import {jwtDecode} from 'jwt-decode';
+
 
 function LogInForm({ onClose }) {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+//navlogout
+
+
+let token = localStorage.getItem("accessToken");
+let user;
+if (token) {
+  user = jwtDecode(token);
+}
+
+  
+  // let token = localStorage.getItem("accessToken");
+  // let user = jwtDecode(token);
+
+  
+  function navlogout(){
+    localStorage.clear();
+    navigate('/');
+  }
+
 
   const handleLogin = async () => {
     axios
@@ -101,7 +123,10 @@ function LogInForm({ onClose }) {
 
           <tr>
             <td>
-              <Button variant="success" onClick={handleLogin}>
+              <Button variant="success" onClick={()=>{
+               handleLogin();
+               navlogout();
+              }}>
                 Login
               </Button>{" "}
               <Button variant="success" onClick={onClose}>
