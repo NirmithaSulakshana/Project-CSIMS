@@ -9,13 +9,26 @@ import VerticalAlignTopSharpIcon from "@mui/icons-material/VerticalAlignTopSharp
 import { useState, useEffect } from "react";
 import "./styles/navBar.css";
 import {jwtDecode} from 'jwt-decode';
-function NavBar() {
+import {useNavigate} from 'react-router-dom';
 
-let token = localStorage.getItem("accessToken");
-let user = jwtDecode.decode(token);
-console.warn(user);
+
+
+function NavBar() {
+  let token = localStorage.getItem("accessToken");
+let user;
+if (token) {
+  user = jwtDecode(token);
+}
 
   
+  // let token = localStorage.getItem("accessToken");
+  // let user = jwtDecode(token);
+  const navigate = useNavigate();
+  
+  function logout(){
+    localStorage.clear();
+    navigate('/');
+  }
 
 
   const [isSticky, setIsSticky] = useState(false);
@@ -66,12 +79,14 @@ console.warn(user);
               
             </NavDropdown>
           </Nav>
+          {localStorage.getItem("accessToken")?
           <Nav>
-              <NavDropdown title="user name">
-                <NavDropdown.Item>Logout</NavDropdown.Item>
+              <NavDropdown title={user && user.email} >
+                <NavDropdown.Item  onClick={logout}>Logout</NavDropdown.Item>
               </NavDropdown>
           </Nav>
-          
+          :null
+}
         </Navbar.Collapse>
       </Container>
     </Navbar>

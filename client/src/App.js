@@ -34,8 +34,8 @@ function App() {
       <Headelement />
 
       <AuthContext.Provider value={{ authState, setauthState }}>
-        <NavBar />
         <BrowserRouter>
+        <NavBar />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/AboutUS" element={<AboutUs />} />
