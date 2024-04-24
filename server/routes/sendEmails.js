@@ -1,5 +1,6 @@
-const nodemailer = require("nodemailer");
 const express = require("express");
+const nodemailer = require("nodemailer");
+
 const mailRouter = express.Router();
 
 const { google } = require("googleapis");
@@ -8,7 +9,7 @@ const CLIENT_ID =
   "1022486305917-cs04dme4apn86e8mhpq15eelr1qk1pr7.apps.googleusercontent.com";
 const CLIENT_SECRET = "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";
 const REFRESH_TOKEN =
-  "1//04Xz53S7mYYxfCgYIARAAGAQSNwF-L9IraTVUvwr8rVoET9yc4NIAq5L7rTslH9OKayQHoxLw8Cxki6JIDPeB4BBJ_alJtV1UuY8";
+  "1//04HySgZPQGigsCgYIARAAGAQSNwF-L9IrbHcvshbQMsN5wS3JCfqUaPpALRY5RuiZqt7RQFzDNobAJ-NJdADTU2AkwIpeTl4cMxs";
 const REDIRECT_URL = "https://developers.google.com/oauthplayground";
 
 // Create an OAuth2 client

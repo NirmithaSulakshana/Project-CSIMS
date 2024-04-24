@@ -12,6 +12,7 @@ function OrderCalender() {
   const [selectedValue, setSelectedValue] = useState(dayjs());
   const [previousOrderDates, setPreviousOrderDates] = useState([]);
   const [showButton, setShowButton] = useState(false);
+  const [selectedOrderId, setSelectedOrderId] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -48,26 +49,30 @@ function OrderCalender() {
     const dateString = newValue.format("YYYY-MM-DD");
     const isPreviousOrderDate = previousOrderDates.includes(dateString);
     setShowButton(isPreviousOrderDate);
+
+    if (isPreviousOrderDate) {
+      setSelectedOrderId(null); // Reset selected order ID
+    }
   };
 
   const onPanelChange = (newValue) => {
     setValue(newValue);
   };
 
-  const handleButtonClick = async () => {
-    // Filter previous order IDs based on the selected date
-    const dateString = selectedValue.format("YYYY-MM-DD");
+  const handleDateCellClick = async (date) => {
+    const dateString = date.format("YYYY-MM-DD");
     try {
       const response = await axios.get(
         `http://localhost:3001/api/previousOrder/getPreviousOrders?date=${dateString}`
       );
       if (response.data.success) {
-        // Assuming the response contains the previous order IDs
         const orderIds = response.data.data.map((order) => order.id);
-        // Store the first order ID (assuming there's only one order for a specific date)
-        localStorage.setItem("previousOrderId", orderIds[0]);
-        // Navigate to the Previous Order page
-        navigate("/AdminPage/PreviousOrder");
+        if (orderIds.length > 0) {
+          // Store the order ID of the selected date in local storage
+          setSelectedOrderId(orderIds[0]);
+        } else {
+          console.error("No previous orders found for the selected date");
+        }
       } else {
         console.error(
           "Failed to fetch previous order IDs for the selected date:",
@@ -76,6 +81,15 @@ function OrderCalender() {
       }
     } catch (error) {
       console.error("Error fetching previous order IDs:", error);
+    }
+  };
+
+  const handleButtonClick = () => {
+    if (selectedOrderId) {
+      localStorage.setItem("previousOrderId", selectedOrderId);
+      navigate("/AdminPage/PreviousOrder");
+    } else {
+      console.error("No order selected for the current date");
     }
   };
 
@@ -93,7 +107,9 @@ function OrderCalender() {
           alignItems: "center",
           height: "100%",
           color: "green",
+          cursor: "pointer",
         }}
+        onClick={() => handleDateCellClick(date)}
       >
         <FlightIcon />
       </div>
@@ -102,6 +118,9 @@ function OrderCalender() {
 
   return (
     <>
+      <div className="calenderHead">
+        <h1>Previous Order Calendar</h1>
+      </div>
       <div className="calContainer">
         <div className="dateTitle">
           <Alert
