@@ -67,7 +67,69 @@ const Packing = () => {
     return userItem ? userItem.quantity : 0;
   };
 
-  const checkItemProperty = (item) => {};
+  const checkItemProperty = (item) => {
+    const property = {
+      cooled: item.cooled,
+      crushed: item.crushed,
+      reacted: item.reacted,
+    };
+    if (
+      property.crushed == true &&
+      property.cooled == true &&
+      property.reacted == true
+    ) {
+      return "Only Single packing";
+    }
+    if (
+      property.crushed == true &&
+      property.cooled == true &&
+      property.reacted == false
+    ) {
+      return "Comnination packing OK";
+    }
+    if (
+      property.crushed == true &&
+      property.cooled == false &&
+      property.reacted == true
+    ) {
+      return "Only Single packing";
+    }
+    if (
+      property.crushed == true &&
+      property.cooled == false &&
+      property.reacted == false
+    ) {
+      return "Only Single packing";
+    }
+    if (
+      property.crushed == false &&
+      property.cooled == true &&
+      property.reacted == true
+    ) {
+      return "Only Single packing";
+    }
+    if (
+      property.crushed == false &&
+      property.cooled == true &&
+      property.reacted == false
+    ) {
+      return "Comnination packing OK";
+    }
+    if (
+      property.crushed == false &&
+      property.cooled == false &&
+      property.reacted == true
+    ) {
+      return "Only Single packing";
+    }
+    if (
+      property.crushed == false &&
+      property.cooled == false &&
+      property.reacted == false
+    ) {
+      return "Comnination packing OK";
+    }
+  };
 
   const handleSinglePacking = () => {};
 
@@ -119,35 +181,7 @@ const Packing = () => {
                           0
                         )}
                       </TableCell>
-                      <TableCell
-                        style={{
-                          backgroundColor:
-                            customers.reduce(
-                              (acc, customer) =>
-                                acc + getUserItemQuantity(item.id, customer.id),
-                              0
-                            ) < item.quantity
-                              ? "green"
-                              : "red",
-                        }}
-                      >
-                        {customers.reduce(
-                          (acc, customer) =>
-                            acc + getUserItemQuantity(item.id, customer.id),
-                          0
-                        ) < item.quantity
-                          ? item.quantity -
-                            customers.reduce(
-                              (acc, customer) =>
-                                acc + getUserItemQuantity(item.id, customer.id),
-                              0
-                            )
-                          : customers.reduce(
-                              (acc, customer) =>
-                                acc + getUserItemQuantity(item.id, customer.id),
-                              0
-                            ) - item.quantity}
-                      </TableCell>
+                      <TableCell>{checkItemProperty(item)}</TableCell>
                       {/*Inside the TableBody component, for each row, add a new TableCell with a checkbox */}
                       <TableCell>
                         <input
