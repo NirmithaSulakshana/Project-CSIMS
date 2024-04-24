@@ -8,10 +8,14 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import VerticalAlignTopSharpIcon from "@mui/icons-material/VerticalAlignTopSharp";
 import { useState, useEffect } from "react";
 import "./styles/navBar.css";
-
+import {jwtDecode} from 'jwt-decode';
 function NavBar() {
-  let user = localStorage.getItem("accessToken");
-  console.warn(user);
+
+let token = localStorage.getItem("accessToken");
+let user = jwtDecode.decode(token);
+console.warn(user);
+
+  
 
 
   const [isSticky, setIsSticky] = useState(false);
