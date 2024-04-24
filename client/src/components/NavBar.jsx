@@ -10,6 +10,10 @@ import { useState, useEffect } from "react";
 import "./styles/navBar.css";
 
 function NavBar() {
+  let user = localStorage.getItem("accessToken");
+  console.warn(user);
+
+
   const [isSticky, setIsSticky] = useState(false);
 
   useEffect(() => {
@@ -57,6 +61,11 @@ function NavBar() {
               <NavDropdown.Divider />
               
             </NavDropdown>
+          </Nav>
+          <Nav>
+              <NavDropdown title="user name">
+                <NavDropdown.Item>Logout</NavDropdown.Item>
+              </NavDropdown>
           </Nav>
           
         </Navbar.Collapse>
