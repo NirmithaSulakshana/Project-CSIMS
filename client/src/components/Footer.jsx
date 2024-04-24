@@ -36,7 +36,7 @@ function Footer() {
             paddingTop: "5px",
           }}
         >
-          &copy; 2023 Your Company. All rights reserved.
+          &copy; 2024 CS ruits & Vegetables. All rights reserved.
         </p>
       </div>
       <div className="ft-media commn">
