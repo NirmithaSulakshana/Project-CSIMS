@@ -1,31 +1,37 @@
 import React, { useEffect, useState } from "react";
-import { Alert, Calendar } from "antd";
+import { Alert, Calendar, Button } from "antd";
 import dayjs from "dayjs";
 import FlightIcon from "@mui/icons-material/Flight";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "../../components/styles/orderCalender.css";
 import Footer from "../../components/Footer";
-import axios from "axios";
 
 function OrderCalender() {
   const [value, setValue] = useState(dayjs());
   const [selectedValue, setSelectedValue] = useState(dayjs());
   const [previousOrderDates, setPreviousOrderDates] = useState([]);
+  const [showButton, setShowButton] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPreviousOrderDates = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3001/api/previousOrder/getPreviousOrders"
+          "http://localhost:3001/api/previousOrder/getPreviousOrdersUpdatedAt"
         );
 
-        // Check if response.data is an array
-        if (Array.isArray(response.data)) {
-          const dates = response.data.map((order) =>
-            dayjs(order.updatedAt).format("YYYY-MM-DD")
+        if (response.data.success) {
+          const updatedAtDates = response.data.data.map(
+            (updatedAtDate) => updatedAtDate.updatedAtDate
           );
-          setPreviousOrderDates(dates);
+
+          setPreviousOrderDates(updatedAtDates);
         } else {
-          console.error("API response is not an array:", response.data);
+          console.error(
+            "Failed to fetch previous order dates:",
+            response.data.error
+          );
         }
       } catch (error) {
         console.error("Error fetching previous order dates:", error);
@@ -38,45 +44,60 @@ function OrderCalender() {
   const onSelect = (newValue) => {
     setValue(newValue);
     setSelectedValue(newValue);
+
+    const dateString = newValue.format("YYYY-MM-DD");
+    const isPreviousOrderDate = previousOrderDates.includes(dateString);
+    setShowButton(isPreviousOrderDate);
   };
 
   const onPanelChange = (newValue) => {
     setValue(newValue);
   };
 
-  // Get the day of the week of the selected date
-  const dayOfWeek = selectedValue.format("dddd");
-
-  // Custom date cell render function
-  const dateCellRender = (date) => {
-    const dateString = date.format("YYYY-MM-DD");
-    let content = null;
-
-    console.log("is array ", Array.isArray(previousOrderDates));
-    console.log(previousOrderDates.length > 0);
-    console.log(previousOrderDates);
-
-    // Check if previousOrderDates is defined and not empty
-    if (Array.isArray(previousOrderDates) && previousOrderDates.length > 0) {
-      // Check if the date is in the previous order dates
-      if (previousOrderDates.includes(dateString)) {
-        content = (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              height: "100%",
-              color: "green",
-            }}
-          >
-            <FlightIcon />
-          </div>
+  const handleButtonClick = async () => {
+    // Filter previous order IDs based on the selected date
+    const dateString = selectedValue.format("YYYY-MM-DD");
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/api/previousOrder/getPreviousOrders?date=${dateString}`
+      );
+      if (response.data.success) {
+        // Assuming the response contains the previous order IDs
+        const orderIds = response.data.data.map((order) => order.id);
+        // Store the first order ID (assuming there's only one order for a specific date)
+        localStorage.setItem("previousOrderId", orderIds[0]);
+        // Navigate to the Previous Order page
+        navigate("/AdminPage/PreviousOrder");
+      } else {
+        console.error(
+          "Failed to fetch previous order IDs for the selected date:",
+          response.data.error
         );
       }
+    } catch (error) {
+      console.error("Error fetching previous order IDs:", error);
     }
+  };
 
-    return content;
+  const dayOfWeek = selectedValue.format("dddd");
+
+  const dateCellRender = (date) => {
+    const dateString = date.format("YYYY-MM-DD");
+    const isPreviousOrderDate = previousOrderDates.includes(dateString);
+
+    return isPreviousOrderDate ? (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100%",
+          color: "green",
+        }}
+      >
+        <FlightIcon />
+      </div>
+    ) : null;
   };
 
   return (
@@ -87,7 +108,7 @@ function OrderCalender() {
             message={`${selectedValue?.format("YYYY-MM-DD")} (${dayOfWeek})`}
           />
         </div>
-        <div className="contentCalender ">
+        <div className="contentCalender">
           <Calendar
             value={value}
             onSelect={onSelect}
@@ -95,6 +116,13 @@ function OrderCalender() {
             cellRender={dateCellRender}
           />
         </div>
+        {showButton && (
+          <div className="buttonContainer">
+            <Button type="primary" onClick={handleButtonClick}>
+              View Order Details
+            </Button>
+          </div>
+        )}
       </div>
       <div>
         <Footer />

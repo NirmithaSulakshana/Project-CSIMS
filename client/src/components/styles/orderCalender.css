@@ -24,10 +24,16 @@
   width: 100%;
 }
 
+.buttonContainer {
+  margin-top: 3%;
+  margin-bottom: 2%;
+}
+
 :where(.css-dev-only-do-not-override-1qfezbu).ant-alert {
   background-color: orange !important;
 }
 
 :where(.css-dev-only-do-not-override-1qfezbu).ant-alert {
   font-size: 150% !important;
+  font-weight: bolder !important;
 }
