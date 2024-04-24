@@ -96,4 +96,40 @@ adminRouter.post("/register", async (req, res) => {
   }
 });
 
+//admin login
+
+adminRouter.post("/alogin", async (req, res) =>{
+  try {
+    const {username, password} = req.body;
+    const admin = await Admins.findOne({where: { username: username}});
+    if(!admin){ 
+      return res.status(404).json({message: "Admin not found"});
+}
+// Hash the entered password using SHA-256
+const enteredHashedPassword = hashPassword(password);
+// Compare the hashed entered password with the stored hashed password in the
+  
+ if (enteredHashedPassword !== admin.password) {
+  return res.status(401).json({ message: "Invalid password " });
+ }
+ // Generate JWT token
+ const accessToken = jwt.sign(
+  {
+    id: admin.id,
+    username: admin.username,
+  } ,
+  
+  "importantsecret",
+  { expiresIn: "1h" }
+  );
+  // Send the token to the client
+  res.status(200).json({ accessToken });
+} catch (error) {
+  console.error("Error during login:", error);
+  res.status(500).json({ message: "Internal server error" });
+}
+
+
+});
+
 module.exports = adminRouter;
