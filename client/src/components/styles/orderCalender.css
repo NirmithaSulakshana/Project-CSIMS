@@ -13,10 +13,24 @@
   border-radius: 10px;
 }
 
+.orderStatusContainer {
+  margin-top: 3%;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
 .calenderHead {
   margin-top: 7%;
   margin-bottom: 4%;
   color: chocolate;
+}
+
+.greenCell {
+  background-color: green;
+}
+
+.redCell {
+  background-color: red;
 }
 
 .dateTitle {

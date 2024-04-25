@@ -9,6 +9,10 @@ import {
   TextField,
 } from "@mui/material";
 import Footer from "../components/Footer";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { showSuccessToast, showErrorToast } from "../components/ToasterMessage";
 
 const AdminSignupC = () => {
   const [userType, setUserType] = useState("");
@@ -35,6 +39,8 @@ const AdminSignupC = () => {
     mobileno: "",
     admincode: "",
   });
+
+  const navigate = useNavigate();
 
   const handleUserTypeChange = (event) => {
     const selectedUserType = event.target.value;
@@ -98,7 +104,16 @@ const AdminSignupC = () => {
     event.preventDefault();
 
     if (!userType) {
+      showErrorToast("Enter User Type");
       console.error("Please select a user type");
+      return;
+    }
+
+    if (
+      (userType === "admin" || userType === "sales manager") &&
+      formData.admincode !== "12345"
+    ) {
+      showErrorToast("Incorrect admin code");
       return;
     }
 
@@ -141,8 +156,10 @@ const AdminSignupC = () => {
         admincode: "",
       });
 
-      // Optionally, you can provide feedback to the user about successful registration
-      console.log("Admin account created successfully");
+      showSuccessToast("Account Created Successfully");
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
     } catch (error) {
       console.error("Error creating admin account", error);
       // Handle error (e.g., display error message to the user)
@@ -382,7 +399,7 @@ const AdminSignupC = () => {
 
               <div className="inputs4">
                 <div className="input4">
-                  {userType === "admin" && (
+                  {userType && (
                     <>
                       <InputLabel
                         htmlFor="admincode"
@@ -437,12 +454,30 @@ const AdminSignupC = () => {
                   }}
                 >
                   Create an Account
+                </Button>{" "}
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  style={{
+                    textTransform: "none",
+                    backgroundColor: "green",
+                    color: "white",
+                    fontSize: "17px",
+                  }}
+                  onClick={() => {
+                    navigate(-1);
+                  }}
+                  sx={{
+                    borderRadius: "9px",
+                  }}
+                >
+                  Back
                 </Button>
               </div>
             </form>
+            <ToastContainer />
           </div>
         </div>
-        <div></div>
       </div>
       <div>
         <Footer />
