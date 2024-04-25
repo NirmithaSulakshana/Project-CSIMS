@@ -21,6 +21,9 @@ const Packing = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [userItems, setUserItems] = useState([]);
+
+  const [packingDetails, setPackingDetails] = useState({});
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -130,8 +133,74 @@ const Packing = () => {
       return "Comnination packing OK";
     }
   };
+  const calTotalWeight = (item) => {
+    let totalWeight = 0;
+    totalWeight = customers.reduce(
+      (acc, customer) => acc + getUserItemQuantity(item.id, customer.id),
+      0
+    );
+    return totalWeight;
+  };
 
-  const handleSinglePacking = () => {};
+  const pack = (weight) => {
+    const packObj = {
+      detail: "",
+      numberOfBox: 0,
+    };
+    if (weight == 0 || weight == 1) {
+      packObj.detail = "Nothing to Pack";
+      packObj.numberOfBox = 0;
+      return packObj;
+    } else {
+      if (weight > 25) {
+        if (weight > 40) {
+          if (weight > 45) {
+            packObj.detail = "Packing in Large and small Regiform Box";
+            packObj.numberOfBox = 2;
+            return packObj;
+          } else {
+            packObj.detail = "Packing in Large Regiform Box";
+            packObj.numberOfBox = 1;
+            return packObj;
+          }
+        } else {
+          packObj.detail = "Packing in two Small Regiform Box";
+          packObj.numberOfBox = 2;
+          return packObj;
+        }
+      } else {
+        packObj.detail = "Packing in a small Regiform Box";
+        packObj.numberOfBox = 2;
+        return packObj;
+      }
+    }
+  };
+
+  const handleSinglePacking = (item, isChecked) => {
+    if (isChecked) {
+      let totalWeight = 0;
+      if (item.cooled == true) {
+        totalWeight = calTotalWeight(item);
+        totalWeight++;
+        setPackingDetails({
+          ...packingDetails,
+          [item.id]: pack(totalWeight),
+        });
+      } else {
+        totalWeight = calTotalWeight(item);
+        setPackingDetails({
+          ...packingDetails,
+          [item.id]: pack(totalWeight),
+        });
+      }
+    } else {
+      // If checkbox is unchecked, remove the packing details for the item
+      setPackingDetails({
+        ...packingDetails,
+        [item.id]: undefined,
+      });
+    }
+  };
 
   return (
     <>
@@ -159,6 +228,7 @@ const Packing = () => {
                   {/*Inside the TableHead component, add a new TableCell for
                   checkboxes */}
                   <TableCell>Single Item Packing</TableCell>
+                  <TableCell>Packing details</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -175,6 +245,7 @@ const Packing = () => {
                         </TableCell>
                       ))}
                       <TableCell className="tableHead">
+                        {/* calculating the total weight for customer order */}
                         {customers.reduce(
                           (acc, customer) =>
                             acc + getUserItemQuantity(item.id, customer.id),
@@ -188,12 +259,14 @@ const Packing = () => {
                           type="checkbox"
                           // Logic to handle checkbox value
                           /* Logic to determine if this item should be packed as a single item */
-                          checked={handleSinglePacking()}
                           onChange={(e) => {
                             // Logic to handle checkbox change
+                            const isChecked = e.target.checked;
+                            handleSinglePacking(item, isChecked);
                           }}
                         />
                       </TableCell>
+                      <TableCell>{packingDetails[item.id]?.detail}</TableCell>
                     </TableRow>
                   ))}
               </TableBody>
