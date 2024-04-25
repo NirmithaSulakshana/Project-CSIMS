@@ -65,6 +65,7 @@ function CurrentOrder() {
       .then((response) => {
         if (response.data.success) {
           console.log("success previous");
+          navigate(-1);
         } else {
           console.log("error previous");
         }
@@ -174,6 +175,33 @@ function CurrentOrder() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+
+      <div className="orderStatusContainer">
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableBody>
+              <TableRow>
+                <TableCell className="greenCell" align="center">
+                  #kg
+                </TableCell>
+                <TableCell align="left">
+                  How much kilos of items arreas in the stock
+                </TableCell>
+              </TableRow>
+
+              <TableRow>
+                <TableCell className="redCell" align="center">
+                  #kg
+                </TableCell>
+                <TableCell align="left">
+                  How much kilos of items remaining in the stock
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+
       <div className="sfpButton">
         <Stack spacing={2} direction="row">
           <Button variant="outlined" onClick={handleSendToPacking}>
